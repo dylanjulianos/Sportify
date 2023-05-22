@@ -42,7 +42,7 @@ class admin_home : Fragment() {
 
         profile_icon.setOnClickListener {
             val hal_profile_admin = admin_profile_page()
-            val transaction: FragmentTransaction = childFragmentManager.beginTransaction()
+            val transaction: FragmentTransaction = parentFragmentManager.beginTransaction()
             transaction.replace(R.id.frame_layout, hal_profile_admin)
             transaction.commit()
         }
