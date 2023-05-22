@@ -5,6 +5,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
+import androidx.fragment.app.FragmentTransaction
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -34,7 +36,18 @@ class admin_home : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_admin_home, container, false)
+        val v = inflater.inflate(R.layout.fragment_admin_home, container, false)
+
+        val profile_icon = v.findViewById(R.id.admin_profile_icon) as ImageView
+
+        profile_icon.setOnClickListener {
+            val hal_profile_admin = admin_profile_page()
+            val transaction: FragmentTransaction = childFragmentManager.beginTransaction()
+            transaction.replace(R.id.frame_layout, hal_profile_admin)
+            transaction.commit()
+        }
+
+        return v
     }
 
     companion object {

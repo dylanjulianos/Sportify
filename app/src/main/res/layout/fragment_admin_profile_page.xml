@@ -4,34 +4,32 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".admin_home">
+    android:visibility="visible"
+    tools:context=".admin_profile_page">
 
     <!-- TODO: Update blank fragment layout -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="150dp"
+        android:layout_marginTop="60dp"
+        android:text="Admin" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/chicle"
-        android:text="Sportify"
-        android:textColor="@color/colorbarmenu"
-        android:textSize="60dp"
-        android:textStyle="bold" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Items"
-        android:textSize="45dp"
-        android:layout_marginTop="120dp" />
+        android:layout_marginLeft="150dp"
+        android:layout_marginTop="75dp"
+        android:text="admin@gmail.com" />
 
     <ImageView
-        android:id="@+id/admin_profile_icon"
-        android:layout_width="93dp"
-        android:layout_height="93dp"
-        android:layout_gravity="right"
-        android:clickable="true"
-        android:focusable="true"
+        android:id="@+id/admin_profile_picture"
+        android:layout_width="45dp"
+        android:layout_height="50dp"
+        android:layout_marginLeft="100dp"
+        android:layout_marginTop="50dp"
         android:visibility="visible"
+        android:focusable="true"
         android:src="@drawable/baseline_person_24"
         tools:src="@drawable/baseline_person_24" />
 
