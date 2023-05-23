@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.fragment.app.FragmentTransaction
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -44,6 +45,15 @@ class admin_home : Fragment() {
             val hal_profile_admin = admin_profile_page()
             val transaction: FragmentTransaction = parentFragmentManager.beginTransaction()
             transaction.replace(R.id.frame_layout, hal_profile_admin)
+            transaction.commit()
+        }
+
+        val add_item = v.findViewById(R.id.AddItemButton) as FloatingActionButton
+
+        add_item.setOnClickListener{
+            val hal_add_item = admin_add_item()
+            val transaction: FragmentTransaction = parentFragmentManager.beginTransaction()
+            transaction.replace(R.id.frame_layout, hal_add_item)
             transaction.commit()
         }
 

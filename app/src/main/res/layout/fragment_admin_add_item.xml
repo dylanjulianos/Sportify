@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".admin_add_item">
+
+    <!-- TODO: Update blank fragment layout -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/chicle"
+        android:text="Sportify"
+        android:textColor="@color/colorbarmenu"
+        android:textSize="60dp"
+        android:textStyle="bold"
+        android:layout_gravity="top"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="90dp"
+        android:text="Items"
+        android:textSize="45dp"
+        android:visibility="visible" />
+
+    <ImageView
+        android:id="@+id/admin_profile_icon"
+        android:layout_width="93dp"
+        android:layout_height="93dp"
+        android:layout_gravity="top"
+        android:layout_marginLeft="320dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:visibility="visible"
+        android:src="@drawable/baseline_person_24"
+        tools:src="@drawable/baseline_person_24"/>
+
+    <ImageView
+        android:id="@+id/item_photo"
+        android:layout_width="103dp"
+        android:layout_height="88dp"
+        android:layout_marginTop="170dp"
+        android:clickable="true"
+        android:src="@android:drawable/ic_menu_camera" />
+
+    <EditText
+        android:id="@+id/item_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="270dp"
+        android:ems="10"
+        android:hint="Name"
+        android:inputType="text"
+        android:scrollHorizontally="false" />
+
+    <EditText
+        android:id="@+id/item_price"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="320dp"
+        android:ems="10"
+        android:hint="Price"
+        android:inputType="text" />
+
+    <EditText
+        android:id="@+id/item_sport_type"
+        android:layout_width="211dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="370dp"
+        android:ems="10"
+        android:hint="Sport Type"
+        android:inputType="text"/>
+
+    <EditText
+        android:id="@+id/item_description"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="textMultiLine"
+        android:layout_marginTop="420dp"
+        android:hint="Description"
+        android:breakStrategy="simple"/>
+
+    <Button
+        android:id="@+id/save_item_button"
+        android:layout_width="166dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:layout_marginLeft="120dp"
+        android:text="Add Item"
+        app:backgroundTint="#0088EB" />
+
+
+</FrameLayout>

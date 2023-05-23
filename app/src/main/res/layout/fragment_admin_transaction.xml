@@ -15,12 +15,13 @@
         android:text="Sportify"
         android:textColor="@color/colorbarmenu"
         android:textSize="60dp"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        android:layout_gravity="top"/>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="120dp"
+        android:layout_marginTop="90dp"
         android:text="Transactions"
         android:textSize="45dp"
         android:visibility="visible" />
@@ -29,7 +30,8 @@
         android:id="@+id/admin_profile_icon"
         android:layout_width="93dp"
         android:layout_height="93dp"
-        android:layout_gravity="right"
+        android:layout_gravity="top"
+        android:layout_marginLeft="320dp"
         android:clickable="true"
         android:focusable="true"
         android:visibility="visible"
@@ -40,8 +42,8 @@
         android:id="@+id/AddItemButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="right"
-        android:layout_marginTop="550dp"
+        android:layout_gravity="bottom"
+        android:layout_marginLeft="350dp"
         android:clickable="true"
         android:src="@android:drawable/ic_input_add"
         app:backgroundTint="#0088EB" />
