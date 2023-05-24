@@ -7,4 +7,9 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+
+<!-- add color bar menu / logo -->
+    <color name="colorbarmenu">#FF0089EC</color>
+    <color name="colorsearch">#D8D8D8</color>
+    <color name="fontsearch">#3C3F41</color>
 </resources>

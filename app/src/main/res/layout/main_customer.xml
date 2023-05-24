@@ -6,7 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".MainCustomer">
 
-
     <FrameLayout
         android:id="@+id/frame_layout"
         android:layout_width="0dp"
@@ -15,6 +14,34 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
+
+<!--        <FrameLayout-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="match_parent"-->
+<!--            android:padding="30dp">-->
+<!--            -->
+<!--            <TextView-->
+<!--                android:id="@+id/logo"-->
+<!--                android:textSize="40dp"-->
+<!--                android:textColor="@color/colorbarmenu"-->
+<!--                android:fontFamily="@font/chicle"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="Sportify"-->
+<!--                tools:layout_editor_absoluteX="16dp"-->
+<!--                tools:layout_editor_absoluteY="15dp">-->
+<!--            </TextView>-->
+
+<!--            <ImageView-->
+<!--                android:id="@+id/btnProfile"-->
+<!--                android:layout_width="50dp"-->
+<!--                android:layout_height="50dp"-->
+<!--                android:padding="0dp"-->
+<!--                android:layout_gravity="right"-->
+<!--                android:src="@drawable/profile_logo">-->
+<!--            </ImageView>-->
+
+<!--        </FrameLayout>-->
 
     </FrameLayout>
 
@@ -26,6 +53,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:menu="@menu/bottom_nav">
-
     </com.google.android.material.bottomnavigation.BottomNavigationView>
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>
