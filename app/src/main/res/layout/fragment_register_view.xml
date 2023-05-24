@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -13,7 +14,7 @@
         <ImageView
             android:id="@+id/imageView"
             android:layout_width="match_parent"
-            android:layout_height="160dp"
+            android:layout_height="200dp"
             tools:src="@drawable/stuff" />
 
         <TextView
@@ -42,34 +43,37 @@
             android:textStyle="bold" />
 
         <EditText
-            android:id="@+id/textfield_Name"
+            android:id="@+id/textfield_NameRegister"
             android:layout_width="250dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="20dp"
             android:background="@drawable/edittext"
+            android:fontFamily="@font/inter_semibold"
             android:hint="Name"
             android:inputType="textEmailAddress"
             android:textSize="14dp" />
 
         <EditText
-            android:id="@+id/textfield_Email"
+            android:id="@+id/textfield_EmailRegister"
             android:layout_width="250dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="15dp"
             android:background="@drawable/edittext"
+            android:fontFamily="@font/inter_semibold"
             android:hint="Email"
             android:inputType="textEmailAddress"
             android:textSize="14dp" />
 
         <EditText
-            android:id="@+id/textfield_Password"
+            android:id="@+id/textfield_PasswordRegister"
             android:layout_width="250dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="15dp"
             android:background="@drawable/edittext"
+            android:fontFamily="@font/inter_semibold"
             android:hint="Password"
             android:inputType="textPassword"
             android:textSize="14dp" />
@@ -83,27 +87,31 @@
             android:textSize="14dp" />
 
         <TextView
+            android:id="@+id/signInButtonInRegister"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginBottom="15dp"
             android:text="Sign in"
             android:textSize="14dp"
-            android:textStyle="bold"/>
+            android:textStyle="bold" />
 
         <Button
-            android:id="@+id/loginButton"
+            android:id="@+id/createAccountButton"
             android:layout_width="250dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:backgroundTint="@color/SportifyPrimaryColor"
-            android:text="Create Account" />
+            android:fontFamily="@font/inter_semibold"
+            android:text="Create Account"
+            app:cornerRadius="10dp" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:text="By signing up, you are accept our Terms of use and Privacy Policy"
-            android:textSize="8dp"/>
+            android:textSize="8dp"
+            android:textStyle="bold" />
     </LinearLayout>
 </FrameLayout>

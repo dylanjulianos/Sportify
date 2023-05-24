@@ -14,7 +14,7 @@
         <ImageView
             android:id="@+id/imageView"
             android:layout_width="match_parent"
-            android:layout_height="160dp"
+            android:layout_height="200dp"
             tools:src="@drawable/stuff" />
 
         <TextView
@@ -43,23 +43,25 @@
             android:textStyle="bold" />
 
         <EditText
-            android:id="@+id/textfield_Email"
+            android:id="@+id/textfield_EmailSignIn"
             android:layout_width="250dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="20dp"
             android:background="@drawable/edittext"
+            android:fontFamily="@font/inter_semibold"
             android:hint="Email"
             android:inputType="textEmailAddress"
             android:textSize="14dp" />
 
         <EditText
-            android:id="@+id/textfield_Password"
+            android:id="@+id/textfield_PasswordSignIn"
             android:layout_width="250dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="15dp"
             android:background="@drawable/edittext"
+            android:fontFamily="@font/inter_semibold"
             android:hint="Password"
             android:inputType="textPassword"
             android:textSize="14dp" />
@@ -73,27 +75,32 @@
             android:textSize="14dp" />
 
         <TextView
+            android:id="@+id/createAccountButtonInSignIn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginBottom="15dp"
+            android:fontFamily="@font/inter_semibold"
             android:text="Create one"
             android:textSize="14dp"
-            android:textStyle="bold"/>
+            android:textStyle="bold" />
 
         <Button
-            android:id="@+id/loginButton"
+            android:id="@+id/signinButton"
             android:layout_width="250dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:backgroundTint="@color/SportifyPrimaryColor"
-            android:text="Sign In" />
+            android:fontFamily="@font/inter_semibold"
+            android:text="Sign In"
+            app:cornerRadius="10dp" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:text="By signing in, you are accept our Terms of use and Privacy Policy"
-            android:textSize="8dp"/>
+            android:textSize="8dp"
+            android:textStyle="bold" />
     </LinearLayout>
 </FrameLayout>
