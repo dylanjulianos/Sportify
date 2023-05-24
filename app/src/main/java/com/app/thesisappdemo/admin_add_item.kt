@@ -64,9 +64,13 @@ class admin_add_item : Fragment() {
             val item_price_input = item_price.text.toString().toFloat()
             val item_sport_type_input = item_sport_type.text.toString()
             val item_bio_input = item_bio.text.toString()
-            val item = Items(kode_item, item_price_input, item_sport_type_input, item_bio_input)
+            val item = Items(kode_item, item_name_input, item_price_input, item_sport_type_input, item_bio_input)
             item_id++
             saveItem(item)
+            item_name.setText("")
+            item_price.setText("")
+            item_sport_type.setText("")
+            item_bio.setText("")
         }
 
         return v
