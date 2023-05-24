@@ -7,50 +7,6 @@
     android:padding="20dp"
     tools:context=".HomeFragment">
 
-    <FrameLayout
-        android:id="@+id/homecontainer"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:padding="5dp">
-
-        <TextView
-            android:id="@+id/logo"
-            android:textSize="40dp"
-            android:textColor="@color/colorbarmenu"
-            android:fontFamily="@font/chicle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Sportify"
-            tools:layout_editor_absoluteX="16dp"
-            tools:layout_editor_absoluteY="15dp">
-        </TextView>
-
-        <ImageView
-            android:id="@+id/btnProfile"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:padding="0dp"
-            android:layout_gravity="right"
-            android:src="@drawable/profile_logo">
-        </ImageView>
-
-    </FrameLayout>
-<!--<FrameLayout-->
-<!--    android:layout_width="match_parent"-->
-<!--    android:layout_height="190dp">-->
-<!--    <com.google.android.material.card.MaterialCardView-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="190dp"-->
-<!--        app:cardCornerRadius="20dp">-->
-
-<!--        <ImageView-->
-<!--            android:id="@+id/cat1"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="match_parent"></ImageView>-->
-
-<!--    </com.google.android.material.card.MaterialCardView>-->
-<!--</FrameLayout>-->
-
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -62,25 +18,12 @@
             android:src="@drawable/logo_whatsapp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.947"
+            app:layout_constraintHorizontal_bias="0.993"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.974" >
-        </ImageView>
+            app:layout_constraintVertical_bias="0.995"></ImageView>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-
-<!--    <TextView-->
-<!--        android:id="@+id/logo"-->
-<!--        android:textSize="40dp"-->
-<!--        android:textColor="@color/colorbarmenu"-->
-<!--        android:fontFamily="@font/chicle"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:text="Sportify"-->
-<!--        tools:layout_editor_absoluteX="16dp"-->
-<!--        tools:layout_editor_absoluteY="15dp">-->
-<!--    </TextView>-->
 
 </FrameLayout>
 
