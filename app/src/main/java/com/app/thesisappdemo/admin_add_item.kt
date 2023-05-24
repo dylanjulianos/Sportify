@@ -42,6 +42,8 @@ class admin_add_item : Fragment() {
         }
     }
     private val itemCollectionRef = Firebase.firestore.collection("Items")
+    private val itemRef = itemCollectionRef.document()
+    var item_id = 1
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -57,11 +59,13 @@ class admin_add_item : Fragment() {
         val item_bio = v.findViewById(R.id.item_description) as EditText
 
         save_item_button.setOnClickListener{
+            val kode_item = "IT" + item_id
             val item_name_input = item_name.text.toString()
             val item_price_input = item_price.text.toString().toFloat()
             val item_sport_type_input = item_sport_type.text.toString()
             val item_bio_input = item_bio.text.toString()
-            val item = Items(item_name_input, item_price_input, item_sport_type_input, item_bio_input)
+            val item = Items(kode_item, item_price_input, item_sport_type_input, item_bio_input)
+            item_id++
             saveItem(item)
         }
 
