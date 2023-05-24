@@ -28,7 +28,7 @@ class RegisterView : AppCompatActivity() {
     lateinit var btnSignIn: TextView
 //    lateinit var auth : FirebaseAuth
 
-    private val customerCollectionRef = Firebase.firestore.collection("customers")
+    private val customerCollectionRef = Firebase.firestore.collection("Customers")
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
