@@ -9,10 +9,13 @@ import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.EditText
+import android.widget.ImageView
 import android.widget.Spinner
 import android.widget.Toast
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.StorageReference
+import com.google.firebase.storage.ktx.storage
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -41,6 +44,7 @@ class admin_add_item : Fragment() {
             param2 = it.getString(ARG_PARAM2)
         }
     }
+    private val storageRef = Firebase.storage.reference
     private val itemCollectionRef = Firebase.firestore.collection("Items")
     private val itemRef = itemCollectionRef.document()
     var item_id = 1
@@ -52,11 +56,16 @@ class admin_add_item : Fragment() {
 
         val v = inflater.inflate(R.layout.fragment_admin_add_item, container, false)
 
+        val pick_image_button = v.findViewById(R.id.item_photo) as ImageView
         val save_item_button = v.findViewById(R.id.save_item_button) as Button
         val item_name = v.findViewById(R.id.item_name) as EditText
         val item_price = v.findViewById(R.id.item_price) as EditText
         val item_sport_type = v.findViewById(R.id.item_sport_type) as EditText
         val item_bio = v.findViewById(R.id.item_description) as EditText
+
+        pick_image_button.setOnClickListener{
+
+        }
 
         save_item_button.setOnClickListener{
             val kode_item = "IT" + item_id

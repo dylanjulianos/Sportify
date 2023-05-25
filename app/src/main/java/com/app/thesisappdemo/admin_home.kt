@@ -7,6 +7,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.fragment.app.FragmentTransaction
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 // TODO: Rename parameter arguments, choose names that match
@@ -24,7 +26,11 @@ class admin_home : Fragment() {
     private var param1: String? = null
     private var param2: String? = null
 
+    private var layoutManager: RecyclerView.LayoutManager? = null
+    private var adapter: RecyclerView.Adapter<RecyclerAdapter.ViewHolder>? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
+        layoutManager = LinearLayoutManager(getActivity())
         super.onCreate(savedInstanceState)
         arguments?.let {
             param1 = it.getString(ARG_PARAM1)
@@ -40,6 +46,13 @@ class admin_home : Fragment() {
         val v = inflater.inflate(R.layout.fragment_admin_home, container, false)
 
         val profile_icon = v.findViewById(R.id.admin_profile_icon) as ImageView
+        val item_list = v.findViewById(R.id.RecyclerView) as RecyclerView
+
+        item_list.layoutManager = layoutManager
+
+        adapter = RecyclerAdapter()
+        item_list.adapter = adapter
+
 
         profile_icon.setOnClickListener {
             val hal_profile_admin = admin_profile_page()
