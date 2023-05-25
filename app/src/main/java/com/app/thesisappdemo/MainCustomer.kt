@@ -43,7 +43,6 @@ class MainCustomer : AppCompatActivity() {
             val intent = Intent(this, Profile::class.java)
             startActivity(intent)
         }
-
     }
 
     private fun replaceFragment(fragment: Fragment){
