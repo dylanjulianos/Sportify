@@ -1,7 +1,15 @@
 package com.app.thesisappdemo
 
 import android.content.ClipData.Item
+import android.Manifest
+import android.app.Activity.RESULT_OK
+import android.content.Intent
+import android.content.pm.PackageManager
+import android.graphics.Bitmap
+import android.graphics.ImageDecoder
+import android.os.Build
 import android.os.Bundle
+import android.provider.MediaStore
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -12,10 +20,13 @@ import android.widget.EditText
 import android.widget.ImageView
 import android.widget.Spinner
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.content.ContextCompat
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.StorageReference
 import com.google.firebase.storage.ktx.storage
+import kotlinx.android.synthetic.main.fragment_admin_add_item.item_photo
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -44,10 +55,41 @@ class admin_add_item : Fragment() {
             param2 = it.getString(ARG_PARAM2)
         }
     }
+
+    private lateinit var pick_image_button: ImageView
     private val storageRef = Firebase.storage.reference
     private val itemCollectionRef = Firebase.firestore.collection("Items")
     private val itemRef = itemCollectionRef.document()
     var item_id = 1
+
+    private val requestPermissionLauncher = registerForActivityResult(
+        ActivityResultContracts.RequestPermission()
+    ) { isGranted: Boolean ->
+        if (isGranted) {
+            openImagePicker()
+        } else {
+
+        }
+    }
+
+    private val pickImageLauncher = registerForActivityResult(
+        ActivityResultContracts.StartActivityForResult()
+    ) { result ->
+        if (result.resultCode == RESULT_OK) {
+            val imageUri = result.data?.data
+            imageUri?.let { uri ->
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+                    val source = ImageDecoder.createSource(requireContext().contentResolver, uri)
+                    val bitmap = ImageDecoder.decodeBitmap(source)
+                    pick_image_button.setImageBitmap(bitmap)
+                } else {
+                    val bitmap = MediaStore.Images.Media.getBitmap(requireContext().contentResolver, uri)
+                    pick_image_button.setImageBitmap(bitmap)
+                }
+            }
+        }
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -55,8 +97,7 @@ class admin_add_item : Fragment() {
         // Inflate the layout for this fragment
 
         val v = inflater.inflate(R.layout.fragment_admin_add_item, container, false)
-
-        val pick_image_button = v.findViewById(R.id.item_photo) as ImageView
+        pick_image_button = v.findViewById(R.id.item_photo)
         val save_item_button = v.findViewById(R.id.save_item_button) as Button
         val item_name = v.findViewById(R.id.item_name) as EditText
         val item_price = v.findViewById(R.id.item_price) as EditText
@@ -64,7 +105,17 @@ class admin_add_item : Fragment() {
         val item_bio = v.findViewById(R.id.item_description) as EditText
 
         pick_image_button.setOnClickListener{
+            val permission = Manifest.permission.READ_EXTERNAL_STORAGE
+            if (ContextCompat.checkSelfPermission(requireContext(), permission) == PackageManager.PERMISSION_GRANTED
+            ) {
 
+                openImagePicker()
+
+            } else {
+
+                requestPermissionLauncher.launch(permission)
+
+            }
         }
 
         save_item_button.setOnClickListener{
@@ -84,6 +135,11 @@ class admin_add_item : Fragment() {
 
         return v
 
+    }
+
+    private fun openImagePicker() {
+        val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+        pickImageLauncher.launch(intent)
     }
 
     private fun saveItem (items: Items) = CoroutineScope(Dispatchers.IO).launch {
