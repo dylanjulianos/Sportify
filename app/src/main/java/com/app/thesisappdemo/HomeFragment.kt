@@ -43,6 +43,13 @@ class HomeFragment : Fragment() {
             startActivity(intent)
         }
 
+        binding.badmintoncat.setOnClickListener {
+            showToast("Badminton")
+            val intent = Intent(requireContext(), Badminton::class.java)
+            startActivity(intent)
+        }
+
+
         val executor = Executors.newSingleThreadExecutor()
         val handler = Handler(Looper.getMainLooper())
 
@@ -83,5 +90,8 @@ class HomeFragment : Fragment() {
                 e.printStackTrace()
             }
         }
+    }
+    private fun showToast(message: String) {
+        Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
     }
 }
