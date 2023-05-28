@@ -1,17 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Profile">
+    tools:context=".Badminton"
+    android:padding="20dp">
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:textSize="100px"
-        android:gravity="center"
-        android:text="Ini Halaman Profile">
+        android:text="Sportify"
+        android:textSize="30dp"
+        android:fontFamily="@font/chicle"
+        android:textColor="@color/colorbarmenu">
     </TextView>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <ImageView
+        android:id="@+id/camera"
+        android:layout_width="250px"
+        android:layout_height="250px"
+        android:layout_marginBottom="190dp"
+        android:layout_gravity="center"
+        android:src="@drawable/camera"
+        android:scaleType="centerCrop">
+    </ImageView>
+
+</FrameLayout>

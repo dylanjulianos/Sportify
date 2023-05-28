@@ -49,7 +49,6 @@ class HomeFragment : Fragment() {
             startActivity(intent)
         }
 
-
         val executor = Executors.newSingleThreadExecutor()
         val handler = Handler(Looper.getMainLooper())
 
