@@ -88,7 +88,6 @@ class admin_add_item : Fragment() {
             val imageUri = result.data?.data
             imageUri?.let { uri ->
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
-                    current_image_url = uri.toString()
                     val source = ImageDecoder.createSource(requireContext().contentResolver, uri)
                     val bitmap = ImageDecoder.decodeBitmap(source)
                     pick_image_button.setImageBitmap(bitmap)
@@ -97,13 +96,15 @@ class admin_add_item : Fragment() {
                     val uploadTask = imageRef.putFile(uri)
                     uploadTask.addOnSuccessListener { taskSnapshot ->
                         // Image upload successful
+                        imageRef.downloadUrl.addOnSuccessListener { uri ->
+                            current_image_url = uri.toString()
+                        }
                         Toast.makeText(requireContext(), "Image uploaded successfully", Toast.LENGTH_SHORT).show()
                     }.addOnFailureListener { exception ->
                         // Handle image upload failure
                         Toast.makeText(requireContext(), "Failed to upload image", Toast.LENGTH_SHORT).show()
                     }
                 } else {
-                    current_image_url = uri.toString()
                     val bitmap = MediaStore.Images.Media.getBitmap(requireContext().contentResolver, uri)
                     pick_image_button.setImageBitmap(bitmap)
                     val storageRef = FirebaseStorage.getInstance().reference
@@ -111,6 +112,11 @@ class admin_add_item : Fragment() {
                     val uploadTask = imageRef.putFile(uri)
                     uploadTask.addOnSuccessListener { taskSnapshot ->
                         // Image upload successful
+                        // imageref.downloadurl digunakan agar url yang digunakan merupakan url permanen gambar dan bukan temporary
+                        // sehingga gambar akan tetap muncul walaupun aplikasi di close dan buka
+                        imageRef.downloadUrl.addOnSuccessListener { uri ->
+                            current_image_url = uri.toString()
+                        }
                         Toast.makeText(requireContext(), "Image uploaded successfully", Toast.LENGTH_SHORT).show()
                     }.addOnFailureListener { exception ->
                         // Handle image upload failure
@@ -135,7 +141,6 @@ class admin_add_item : Fragment() {
         val item_sport_type = v.findViewById(R.id.item_sport_type) as EditText
         val item_bio = v.findViewById(R.id.item_description) as EditText
         val db = FirebaseFirestore.getInstance()
-        val imageDocRef = db.collection("images").document()
 
 
         pick_image_button.setOnClickListener{
@@ -169,27 +174,6 @@ class admin_add_item : Fragment() {
 
         return v
 
-    }
-
-    private fun saveImageUrlToFirestore(imageUrl: String) {
-        val db = FirebaseFirestore.getInstance()
-
-        val item = hashMapOf(
-            "imageUrl" to imageUrl
-        )
-
-        db.collection("Items")
-            .add(item)
-            .addOnSuccessListener { documentReference ->
-                // Image URL saved to Firestore successfully
-                val itemId = documentReference.id
-                Toast.makeText(requireContext(), "Image uploaded successfully", Toast.LENGTH_SHORT).show()
-                // Use the itemId as needed
-            }
-            .addOnFailureListener { exception ->
-                // Handle failure to save image URL to Firestore
-                Toast.makeText(requireContext(), "Failed to save image URL", Toast.LENGTH_SHORT).show()
-            }
     }
 
     private fun openImagePicker() {
