@@ -69,6 +69,7 @@ class admin_add_item : Fragment() {
     private lateinit var pick_image_button: ImageView
     private val itemCollectionRef = Firebase.firestore.collection("Items")
     var item_id = 1
+    private lateinit var current_image_url: String
 
     private val requestPermissionLauncher = registerForActivityResult(
         ActivityResultContracts.RequestPermission()
@@ -87,6 +88,7 @@ class admin_add_item : Fragment() {
             val imageUri = result.data?.data
             imageUri?.let { uri ->
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+                    current_image_url = uri.toString()
                     val source = ImageDecoder.createSource(requireContext().contentResolver, uri)
                     val bitmap = ImageDecoder.decodeBitmap(source)
                     pick_image_button.setImageBitmap(bitmap)
@@ -101,6 +103,7 @@ class admin_add_item : Fragment() {
                         Toast.makeText(requireContext(), "Failed to upload image", Toast.LENGTH_SHORT).show()
                     }
                 } else {
+                    current_image_url = uri.toString()
                     val bitmap = MediaStore.Images.Media.getBitmap(requireContext().contentResolver, uri)
                     pick_image_button.setImageBitmap(bitmap)
                     val storageRef = FirebaseStorage.getInstance().reference
@@ -131,6 +134,9 @@ class admin_add_item : Fragment() {
         val item_price = v.findViewById(R.id.item_price) as EditText
         val item_sport_type = v.findViewById(R.id.item_sport_type) as EditText
         val item_bio = v.findViewById(R.id.item_description) as EditText
+        val db = FirebaseFirestore.getInstance()
+        val imageDocRef = db.collection("images").document()
+
 
         pick_image_button.setOnClickListener{
             val permission = Manifest.permission.READ_EXTERNAL_STORAGE
@@ -152,7 +158,7 @@ class admin_add_item : Fragment() {
             val item_price_input = item_price.text.toString().toFloat()
             val item_sport_type_input = item_sport_type.text.toString()
             val item_bio_input = item_bio.text.toString()
-            val item = Items(kode_item, item_name_input, item_price_input, item_sport_type_input, item_bio_input)
+            val item = Items(current_image_url, kode_item, item_name_input, item_price_input, item_sport_type_input, item_bio_input)
             item_id++
             saveItem(item)
             item_name.setText("")
@@ -163,6 +169,27 @@ class admin_add_item : Fragment() {
 
         return v
 
+    }
+
+    private fun saveImageUrlToFirestore(imageUrl: String) {
+        val db = FirebaseFirestore.getInstance()
+
+        val item = hashMapOf(
+            "imageUrl" to imageUrl
+        )
+
+        db.collection("Items")
+            .add(item)
+            .addOnSuccessListener { documentReference ->
+                // Image URL saved to Firestore successfully
+                val itemId = documentReference.id
+                Toast.makeText(requireContext(), "Image uploaded successfully", Toast.LENGTH_SHORT).show()
+                // Use the itemId as needed
+            }
+            .addOnFailureListener { exception ->
+                // Handle failure to save image URL to Firestore
+                Toast.makeText(requireContext(), "Failed to save image URL", Toast.LENGTH_SHORT).show()
+            }
     }
 
     private fun openImagePicker() {
