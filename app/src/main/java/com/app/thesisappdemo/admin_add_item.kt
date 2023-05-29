@@ -6,7 +6,10 @@ import android.app.Activity.RESULT_OK
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
+import android.graphics.Canvas
 import android.graphics.ImageDecoder
+import android.graphics.drawable.Drawable
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
@@ -22,8 +25,11 @@ import android.widget.Spinner
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
+import androidx.core.graphics.drawable.toBitmap
+import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import com.google.firebase.storage.ktx.storage
 import kotlinx.android.synthetic.main.fragment_admin_add_item.item_photo
@@ -32,6 +38,10 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
 import kotlinx.coroutines.withContext
+import java.io.ByteArrayOutputStream
+import java.io.File
+import java.io.FileOutputStream
+import java.io.IOException
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -57,9 +67,7 @@ class admin_add_item : Fragment() {
     }
 
     private lateinit var pick_image_button: ImageView
-    private val storageRef = Firebase.storage.reference
     private val itemCollectionRef = Firebase.firestore.collection("Items")
-    private val itemRef = itemCollectionRef.document()
     var item_id = 1
 
     private val requestPermissionLauncher = registerForActivityResult(
@@ -82,9 +90,29 @@ class admin_add_item : Fragment() {
                     val source = ImageDecoder.createSource(requireContext().contentResolver, uri)
                     val bitmap = ImageDecoder.decodeBitmap(source)
                     pick_image_button.setImageBitmap(bitmap)
+                    val storageRef = FirebaseStorage.getInstance().reference
+                    val imageRef = storageRef.child("images/${System.currentTimeMillis()}.jpg")
+                    val uploadTask = imageRef.putFile(uri)
+                    uploadTask.addOnSuccessListener { taskSnapshot ->
+                        // Image upload successful
+                        Toast.makeText(requireContext(), "Image uploaded successfully", Toast.LENGTH_SHORT).show()
+                    }.addOnFailureListener { exception ->
+                        // Handle image upload failure
+                        Toast.makeText(requireContext(), "Failed to upload image", Toast.LENGTH_SHORT).show()
+                    }
                 } else {
                     val bitmap = MediaStore.Images.Media.getBitmap(requireContext().contentResolver, uri)
                     pick_image_button.setImageBitmap(bitmap)
+                    val storageRef = FirebaseStorage.getInstance().reference
+                    val imageRef = storageRef.child("images/${System.currentTimeMillis()}.jpg")
+                    val uploadTask = imageRef.putFile(uri)
+                    uploadTask.addOnSuccessListener { taskSnapshot ->
+                        // Image upload successful
+                        Toast.makeText(requireContext(), "Image uploaded successfully", Toast.LENGTH_SHORT).show()
+                    }.addOnFailureListener { exception ->
+                        // Handle image upload failure
+                        Toast.makeText(requireContext(), "Failed to upload image", Toast.LENGTH_SHORT).show()
+                    }
                 }
             }
         }
@@ -144,6 +172,7 @@ class admin_add_item : Fragment() {
 
     private fun saveItem (items: Items) = CoroutineScope(Dispatchers.IO).launch {
         try {
+
             itemCollectionRef.add(items).await()
             withContext(Dispatchers.Main){
                 Toast.makeText(activity, "Successfully Added Item", Toast.LENGTH_LONG).show()
@@ -154,7 +183,6 @@ class admin_add_item : Fragment() {
             }
         }
     }
-
 
 
     companion object {
