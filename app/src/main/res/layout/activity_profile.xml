@@ -26,4 +26,27 @@
         android:scaleType="centerCrop">
     </ImageView>
 
+    <TextView
+        android:id="@+id/showusername"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginBottom="70dp"
+        android:layout_gravity="center"
+        android:textAlignment="center"
+        android:text="Username"
+        android:textSize="25dp">
+    </TextView>
+
+
+    <TextView
+        android:id="@+id/showemail"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginBottom="20dp"
+        android:layout_gravity="center"
+        android:textAlignment="center"
+        android:text="Email"
+        android:textSize="25dp">
+    </TextView>
+
 </FrameLayout>

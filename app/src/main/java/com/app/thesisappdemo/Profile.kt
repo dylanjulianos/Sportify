@@ -8,8 +8,10 @@ import android.provider.MediaStore
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.FirebaseApp
+import com.google.firebase.auth.FirebaseAuth
 import java.io.FileNotFoundException
 
 
@@ -19,10 +21,7 @@ class Profile : AppCompatActivity() {
 
 
     val db = FirebaseFirestore.getInstance()
-
-    //variabel untuk mengambil data profile//
-    private lateinit var username: EditText
-    private lateinit var email: EditText
+    private lateinit var firebaseAuth: FirebaseAuth
 
     private lateinit var showusername: TextView
     private lateinit var showemail: TextView
@@ -30,6 +29,28 @@ class Profile : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_profile)
+        firebaseAuth = FirebaseAuth.getInstance()
+
+        val uid = firebaseAuth.currentUser?.uid
+        showusername = findViewById(R.id.showusername)
+        showemail = findViewById(R.id.showemail)
+
+        val docRef = db.collection("Customers").document("JuOlJK65CMZZgJk4y47g")
+//            .document(uid!!)
+        docRef.get()
+            .addOnSuccessListener { document ->
+                if(document != null){
+                    val un = document.data!!["name"].toString()
+                    val email = document.data!!["email"].toString()
+
+                    showusername.text = un
+                    showemail.text = email
+                }
+            }
+            .addOnFailureListener{
+                exception -> Toast.makeText(this, "Failed", Toast.LENGTH_SHORT).show()
+            }
+
 
         camera = findViewById(R.id.camera)
 
@@ -37,8 +58,6 @@ class Profile : AppCompatActivity() {
         openGalleryButton.setOnClickListener{
             openGallery()
         }
-
-//        val uid = fire
     }
 
     private fun openGallery(){
