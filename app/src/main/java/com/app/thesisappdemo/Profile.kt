@@ -1,6 +1,7 @@
 package com.app.thesisappdemo
 
 import android.content.Intent
+import android.os.Build
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -12,6 +13,7 @@ import android.widget.Toast
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.FirebaseApp
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.storage.FirebaseStorage
 import java.io.FileNotFoundException
 
 
@@ -35,7 +37,8 @@ class Profile : AppCompatActivity() {
         showusername = findViewById(R.id.showusername)
         showemail = findViewById(R.id.showemail)
 
-        val docRef = db.collection("Customers").document("JuOlJK65CMZZgJk4y47g")
+        val docRef = db.collection("Customers")
+            .document("JuOlJK65CMZZgJk4y47g")
 //            .document(uid!!)
         docRef.get()
             .addOnSuccessListener { document ->
@@ -70,22 +73,61 @@ class Profile : AppCompatActivity() {
 
         if(requestCode == REQUEST_CODE && resultCode == RESULT_OK && data != null){
             val selectedImage = data.data
-            camera.setImageURI(selectedImage)
 
-            val layoutParams = camera.layoutParams
+            selectedImage?.let { uri ->
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+                    camera.setImageURI(selectedImage)
 
-            try {
+                    val layoutParams = camera.layoutParams
 
-                layoutParams.width = 260
-                layoutParams.height = 260
-                camera.layoutParams = layoutParams
+                    try {
 
-                camera.scaleType = ImageView.ScaleType.CENTER_CROP
-            }
-                catch (e: FileNotFoundException)
-            {
-                e.printStackTrace()
+                        layoutParams.width = 260
+                        layoutParams.height = 260
+                        camera.layoutParams = layoutParams
+
+                        camera.scaleType = ImageView.ScaleType.CENTER_CROP
+                    } catch (e: FileNotFoundException) {
+                        e.printStackTrace()
+                    }
+
+                    val storageRef = FirebaseStorage.getInstance().reference
+                    val imageRef =
+                        storageRef.child("profilepicture/${System.currentTimeMillis()}.jpg")
+                    val uploadTask = imageRef.putFile(uri)
+                    uploadTask.addOnSuccessListener {
+                        taskSnapshot -> Toast.makeText(this, "Profile Updated", Toast.LENGTH_SHORT).show()
+                    }.addOnFailureListener{
+                        exception -> Toast.makeText(this, "Try Again", Toast.LENGTH_SHORT).show()
+                    }
+                }
+                else{
+                    camera.setImageURI(selectedImage)
+
+                    val layoutParams = camera.layoutParams
+
+                    try {
+
+                        layoutParams.width = 260
+                        layoutParams.height = 260
+                        camera.layoutParams = layoutParams
+
+                        camera.scaleType = ImageView.ScaleType.CENTER_CROP
+                    } catch (e: FileNotFoundException) {
+                        e.printStackTrace()
+                    }
+
+                    val storageRef = FirebaseStorage.getInstance().reference
+                    val imageRef =
+                        storageRef.child("profilepicture/${System.currentTimeMillis()}.jpg")
+                    val uploadTask = imageRef.putFile(uri)
+                    uploadTask.addOnSuccessListener {
+                            taskSnapshot -> Toast.makeText(this, "Profile Updated", Toast.LENGTH_SHORT).show()
+                    }.addOnFailureListener{
+                            exception -> Toast.makeText(this, "Try Again", Toast.LENGTH_SHORT).show()
+                    }
+                }
+                }
             }
         }
     }
-}
