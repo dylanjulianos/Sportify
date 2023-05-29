@@ -1,6 +1,8 @@
 package com.app.thesisappdemo
 
+import android.content.ContentValues.TAG
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -9,7 +11,9 @@ import android.widget.ImageView
 import androidx.fragment.app.FragmentTransaction
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView.Recycler
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.google.firebase.firestore.FirebaseFirestore
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -26,6 +30,7 @@ class admin_home : Fragment() {
     private var param1: String? = null
     private var param2: String? = null
 
+    private val firestore = FirebaseFirestore.getInstance()
     private var layoutManager: RecyclerView.LayoutManager? = null
     private var adapter: RecyclerView.Adapter<RecyclerAdapter.ViewHolder>? = null
 
@@ -50,8 +55,15 @@ class admin_home : Fragment() {
 
         item_list.layoutManager = layoutManager
 
-        adapter = RecyclerAdapter()
-        item_list.adapter = adapter
+        firestore.collection("Items").get().addOnSuccessListener { result ->
+            val dataset = result.documents
+            val adapter = RecyclerAdapter(dataset)
+            item_list.adapter = adapter
+        }
+            .addOnFailureListener { exception ->
+                // Handle any errors
+                Log.e(TAG, "Error getting documents: ", exception)
+            }
 
 
         profile_icon.setOnClickListener {

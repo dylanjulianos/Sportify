@@ -7,25 +7,38 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.google.firebase.firestore.DocumentSnapshot
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.FirebaseStorage
+import com.squareup.picasso.Picasso
 
-class RecyclerAdapter: RecyclerView.Adapter<RecyclerAdapter.ViewHolder>() {
+class RecyclerAdapter(private val dataset: List<DocumentSnapshot>): RecyclerView.Adapter<RecyclerAdapter.ViewHolder>() {
 
-    private var name = arrayOf("nama1", "nama2", "nama3", "nama4", "hanzel gay")
-    private var bio = arrayOf("det1", "det2", "det3", "det4", "gay")
-    private var images = intArrayOf(R.drawable.baseline_person_24, R.drawable.baseline_person_24, R.drawable.baseline_person_24, R.drawable.baseline_person_24, R.drawable.baseline_person_24)
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerAdapter.ViewHolder {
         val v = LayoutInflater.from(parent.context).inflate(R.layout.card_layout, parent, false)
         return ViewHolder(v)
     }
 
-    override fun onBindViewHolder(holder: RecyclerAdapter.ViewHolder, position: Int) {
-        holder.itemName.text = name[position]
-        holder.itemBio.text = bio[position]
-        holder.itemImage.setImageResource(images[position])
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        val documentSnapshot = dataset[position]
+        val nama = documentSnapshot.getString("item_name")
+        val description = documentSnapshot.getString("item_bio")
+        val imageUrl = documentSnapshot.getString("image_url")
+
+        holder.itemName.text = nama
+        holder.itemBio.text = description
+        if (imageUrl != null) { Picasso.get().load(imageUrl).into(holder.itemImage)
+        } else {
+            // If imageUrl is null or empty, you can set a placeholder image or handle it differently
+            holder.itemImage.setImageResource(R.drawable.baseline_person_24)
+        }
+
     }
 
     override fun getItemCount(): Int {
-        return name.size
+        return dataset.size
     }
 
     inner class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
