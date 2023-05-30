@@ -127,7 +127,7 @@ class Profile : AppCompatActivity() {
                             exception -> Toast.makeText(this, "Try Again", Toast.LENGTH_SHORT).show()
                     }
                 }
-                }
             }
         }
     }
+}
