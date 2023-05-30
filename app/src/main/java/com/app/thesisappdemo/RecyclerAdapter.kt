@@ -1,23 +1,35 @@
 package com.app.thesisappdemo
 
-import android.text.Layout
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
+import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.FragmentTransaction
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.firestore.DocumentSnapshot
-import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.ktx.firestore
-import com.google.firebase.ktx.Firebase
-import com.google.firebase.storage.FirebaseStorage
 import com.squareup.picasso.Picasso
 
-class RecyclerAdapter(private val dataset: List<DocumentSnapshot>): RecyclerView.Adapter<RecyclerAdapter.ViewHolder>() {
-
+class RecyclerAdapter(private val dataset: List<DocumentSnapshot>, private val fragmentManager: FragmentManager): RecyclerView.Adapter<RecyclerAdapter.ViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerAdapter.ViewHolder {
         val v = LayoutInflater.from(parent.context).inflate(R.layout.card_layout, parent, false)
+        val edit_item_button = v.findViewById(R.id.edit_item_button) as ImageButton
+        val delete_item_button = v.findViewById(R.id.delete_item_button) as ImageButton
+
+        edit_item_button.setOnClickListener{
+            val hal_edit_item = admin_edit_item()
+            val transaction = fragmentManager.beginTransaction()
+            transaction.replace(R.id.frame_layout, hal_edit_item)
+            transaction.commit()
+        }
+
+        delete_item_button.setOnClickListener{
+            Toast.makeText(v.context, "delete item button", Toast.LENGTH_SHORT).show()
+        }
+
         return ViewHolder(v)
     }
 

@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageButton
 import android.widget.ImageView
 import androidx.fragment.app.FragmentTransaction
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -52,12 +53,11 @@ class admin_home : Fragment() {
 
         val profile_icon = v.findViewById(R.id.admin_profile_icon) as ImageView
         val item_list = v.findViewById(R.id.RecyclerView) as RecyclerView
-
         item_list.layoutManager = layoutManager
 
         firestore.collection("Items").get().addOnSuccessListener { result ->
             val dataset = result.documents
-            val adapter = RecyclerAdapter(dataset)
+            val adapter = RecyclerAdapter(dataset, parentFragmentManager)
             item_list.adapter = adapter
         }
             .addOnFailureListener { exception ->
