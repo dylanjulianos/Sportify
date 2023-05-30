@@ -1,10 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".RegisterView">
+    android:layout_height="match_parent">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -15,7 +13,7 @@
             android:id="@+id/imageView"
             android:layout_width="match_parent"
             android:layout_height="200dp"
-            tools:src="@drawable/stuff" />
+            android:src="@drawable/stuff" />
 
         <TextView
             android:id="@+id/appTitle"
@@ -78,6 +76,17 @@
             android:inputType="textPassword"
             android:textSize="14dp" />
 
+        <EditText
+            android:id="@+id/textfield_RoleRegister"
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="15dp"
+            android:background="@drawable/edittext"
+            android:fontFamily="@font/inter_semibold"
+            android:hint="Type 'Customer'"
+            android:textSize="14dp" />
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -104,7 +113,8 @@
             android:backgroundTint="@color/SportifyPrimaryColor"
             android:fontFamily="@font/inter_semibold"
             android:text="Create Account"
-            app:cornerRadius="10dp" />
+            android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+            app:cornerRadius="8dp" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -114,4 +124,5 @@
             android:textSize="8dp"
             android:textStyle="bold" />
     </LinearLayout>
-</FrameLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

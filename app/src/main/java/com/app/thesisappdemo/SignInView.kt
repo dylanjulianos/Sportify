@@ -8,139 +8,92 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.ktx.firestore
-import com.google.firebase.ktx.Firebase
 
-class SignInView : AppCompatActivity() {
-
-//    lateinit var binding : FragmentSignInViewBinding
-//    lateinit var auth : FirebaseAuth
-
-    lateinit var firestore: FirebaseFirestore
+class SignInView: AppCompatActivity() {
 
     lateinit var etEmail: EditText
     lateinit var etPassword: EditText
     lateinit var btnSignIn: Button
-    lateinit var btnCreateOne: TextView
-
-    private var db = Firebase.firestore
+    lateinit var btnCreateAccount: TextView
+    lateinit var firestore: FirebaseFirestore
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.fragment_sign_in_view)
-
-//        auth = FirebaseAuth.getInstance()
-
-        firestore = FirebaseFirestore.getInstance()
+        setContentView(R.layout.signin_view)
 
         etEmail = findViewById(R.id.textfield_EmailSignIn)
         etPassword = findViewById(R.id.textfield_PasswordSignIn)
         btnSignIn = findViewById(R.id.signinButton)
-        btnCreateOne = findViewById(R.id.createAccountButtonInSignIn)
+        btnCreateAccount = findViewById(R.id.createAccountButtonInSignIn)
 
-//        val userId = FirebaseFirestore.getInstance()
-//        val reference = db.collection("customers").document(userId.toString())
+        firestore = FirebaseFirestore.getInstance()
+
+        btnCreateAccount.setOnClickListener {
+            val intent = Intent(this, RegistrationView::class.java)
+            startActivity(intent)
+        }
 
         btnSignIn.setOnClickListener {
             val email = etEmail.text.toString()
             val password = etPassword.text.toString()
 
-            if (email.isEmpty() && password.isEmpty()) {
-                etEmail.error = "Field tidak boleh kosong"
-                etEmail.requestFocus()
-                return@setOnClickListener
-            }
+            val usersCollection = firestore.collection("Users")
+            val query = usersCollection
+                .whereEqualTo("email", email)
+                .whereEqualTo("password", password)
 
-            //Validasi user
-//            reference.get().addOnSuccessListener {
-//                if (it != null) {
-//                    val name = it.data?.get("name").toString()
-//                    val email = it.data?.get("email").toString()
-//                    val password = it.data?.get("password").toString()
-//
-//                    etEmail.text = email
-//                    etPassword.text = password
-//                }
-//            }
-//                .addOnFailureListener {
-//                    Toast.makeText(this, "Failed to signing in!", Toast.LENGTH_SHORT).show()
-//                }
+            query.get()
+                .addOnSuccessListener { querySnapshot ->
+                    if (!querySnapshot.isEmpty) {
 
-            signIn(email, password)
+                        //login success
+                        val userDocument = querySnapshot.documents[0]
+                        val userId = userDocument.id
+
+                        getUserRole(userId)
+//                        val intent = Intent(this, MainActivity::class.java)
+//                        startActivity(intent)
+                    } else {
+                        Toast.makeText(this, "Incorrect Email or Password, please try again", Toast.LENGTH_LONG).show()
+                    }
+                }
         }
-
-        btnCreateOne.setOnClickListener {
-            val intent = Intent(this, RegisterView::class.java)
-            startActivity(intent)
-        }
-
-//        binding = FragmentSignInViewBinding.inflate(layoutInflater)
-//        super.onCreate(savedInstanceState)
-//        setContentView(binding.root)
-//
-//        //Untuk menuju dari halaman sign in ke halaman register
-//        binding.createAccountButtonInSignIn.setOnClickListener {
-//            val intent = Intent(this, RegisterView::class.java)
-//            startActivity(intent)
-//        }
-//
-//        binding.signinButton.setOnClickListener {
-//            val email = binding.textfieldEmailSignIn.text.toString()
-//            val password = binding.textfieldPasswordSignIn.text.toString()
-//
-//            //Kalo email kosong (validasi email)
-//            if (email.isEmpty()) {
-//                binding.textfieldEmailSignIn.error = "Field Email tidak boleh kosong!"
-//                binding.textfieldEmailSignIn.requestFocus()
-//                return@setOnClickListener
-//            }
-//
-//            //Kalo email tidak valid (validasi email kalo tidak sesuai formatnya)
-//            if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-//                binding.textfieldEmailSignIn.error = "Format email tidak valid"
-//                binding.textfieldEmailSignIn.requestFocus()
-//                return@setOnClickListener
-//            }
-//
-//            //Kalo password kosong (validasi password)
-//            if (password.isEmpty()) {
-//                binding.textfieldPasswordSignIn.error = "Field Passsword tidak boleh kosong!"
-//                binding.textfieldPasswordSignIn.requestFocus()
-//                return@setOnClickListener
-//            }
-//            SignInFirebase(email, password)
-//        }
     }
 
-    //Function untuk sign in user
-    private fun signIn(email: String, password: String) {
-        firestore.collection("customers").get().addOnSuccessListener {
+    fun getUserRole(userId: String) {
+        val firestore = FirebaseFirestore.getInstance()
 
-            Toast.makeText(this, "Succeed", Toast.LENGTH_LONG).show()
-            val intent = Intent(this, MainActivity::class.java)
-            startActivity(intent)
-            finish()
-        }
-            .addOnFailureListener {
-
-                it.printStackTrace()
-                Toast.makeText(this, "Failed", Toast.LENGTH_LONG).show()
+        firestore.collection("Users").document(userId)
+            .get()
+            .addOnSuccessListener { documentSnapshot ->
+                val role = documentSnapshot.getString("role")
+                // Use the role as needed
+                if (role == "Admin") {
+                    val intent = Intent(this@SignInView, AdminView::class.java)
+                    startActivity(intent)
+                } else if (role == "Customer") {
+                    val intent = Intent(this@SignInView, CustomerView::class.java)
+                    startActivity(intent)
+                }
             }
+//            .addOnFailureListener { exception ->
+//                // Handle failure to retrieve user role
+//            }
     }
-}
 
-    //    private fun SignInFirebase(email: String, password: String) {
-//        auth.signInWithEmailAndPassword(email, password)
-//            .addOnCompleteListener(this) {
-//                //Kalau berhasil sign in
-//                if (it.isSuccessful) {
-//                    Toast.makeText(this, "Selamat datang $email", Toast.LENGTH_SHORT).show()
-//                    val intent = Intent(this, MainActivity::class.java)
-//                    startActivity(intent)
-//                } else {
-//                    //Kalau gagal sign in
-//                    Toast.makeText(this,"${it.exception?.message}", Toast.LENGTH_SHORT).show()
+//    fun getUserRole(userId: String) {
+//        val cRef = firestore.collection("Users").document("role")
+//
+//        cRef.get()
+//            .addOnSuccessListener { querySnapshot ->
+//                for (documentSnapshot in querySnapshot) {
+//                    val data = documentSnapshot.data
 //                }
+//            }
+//            .addOnFailureListener {
+//
 //            }
 //    }
+
+}

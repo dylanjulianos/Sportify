@@ -29,8 +29,10 @@
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
 
-        <activity android:name=".RegisterView"/>
+        <activity android:name=".RegistrationView"/>
         <activity android:name=".MainActivity"/>
+        <activity android:name= ".CustomerView" />
+        <activity android:name=".AdminView" />
     </application>
 
 </manifest>
