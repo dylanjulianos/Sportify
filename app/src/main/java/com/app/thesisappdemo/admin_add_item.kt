@@ -164,7 +164,6 @@ class admin_add_item : Fragment() {
             val item_sport_type_input = item_sport_type.text.toString()
             val item_bio_input = item_bio.text.toString()
             val item = Items(current_image_url, kode_item, item_name_input, item_price_input, item_sport_type_input, item_bio_input)
-            item_id++
             saveItem(item)
             item_name.setText("")
             item_price.setText("")
@@ -183,12 +182,30 @@ class admin_add_item : Fragment() {
 
     private fun saveItem (items: Items) = CoroutineScope(Dispatchers.IO).launch {
         try {
+            itemCollectionRef.add(items).addOnSuccessListener { documentReference ->
+                val documentId = documentReference.id
 
-            itemCollectionRef.add(items).await()
-            withContext(Dispatchers.Main){
-                Toast.makeText(activity, "Successfully Added Item", Toast.LENGTH_LONG).show()
-            }
-        }catch (e: Exception){
+                val updatedDocument = hashMapOf(
+                    "image_url" to items.image_url,
+                    "item_name" to items.item_name,
+                    "item_price" to items.price,
+                    "item_bio" to items.item_bio,
+                    "sport_category" to items.sport_category,
+                    "item_code" to documentId
+                )
+
+                // Update the document with the new data
+                documentReference.set(updatedDocument).addOnSuccessListener {
+                        println("Succesfully Added Item")
+                    }.addOnFailureListener { e ->
+                        // Handle any errors that occurred during the update
+                        println("Error updating document: ${e.message}")
+                    }
+            }.addOnFailureListener { e ->
+                    // Handle any errors that occurred during the addition of the document
+                    println("Error adding document: ${e.message}")
+                }
+            } catch (e: Exception){
             withContext(Dispatchers.Main){
                 Toast.makeText(activity, e.message, Toast.LENGTH_LONG).show()
             }
