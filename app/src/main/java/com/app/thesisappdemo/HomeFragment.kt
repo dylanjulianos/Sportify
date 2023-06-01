@@ -12,6 +12,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentTransaction
 import com.app.thesisappdemo.databinding.FragmentHomeBinding
 import java.util.concurrent.Executors
 
@@ -40,9 +41,39 @@ class HomeFragment : Fragment() {
         }
 
         binding.badmintoncat.setOnClickListener {
-            showToast("Badminton")
-            val intent = Intent(requireContext(), Badminton::class.java)
-            startActivity(intent)
+            showToast("Loading, Please wait...")
+            val destinationFragment = Badminton()
+            val transaction: FragmentTransaction = parentFragmentManager.beginTransaction()
+
+            transaction.replace(R.id.frame_layout, destinationFragment)
+            transaction.commit()
+        }
+
+        binding.soccercat.setOnClickListener {
+            showToast("Loading, Please wait...")
+            val destinationFragment = Soccer()
+            val transaction: FragmentTransaction = parentFragmentManager.beginTransaction()
+
+            transaction.replace(R.id.frame_layout, destinationFragment)
+            transaction.commit()
+        }
+
+        binding.basketballcat.setOnClickListener {
+            showToast("Loading, Please wait...")
+            val destinationFragment = Basketball()
+            val transaction: FragmentTransaction = parentFragmentManager.beginTransaction()
+
+            transaction.replace(R.id.frame_layout, destinationFragment)
+            transaction.commit()
+        }
+
+        binding.golfcat.setOnClickListener {
+            showToast("Loading, Please wait...")
+            val destinationFragment = Golf()
+            val transaction: FragmentTransaction = parentFragmentManager.beginTransaction()
+
+            transaction.replace(R.id.frame_layout, destinationFragment)
+            transaction.commit()
         }
 
         val executor = Executors.newSingleThreadExecutor()

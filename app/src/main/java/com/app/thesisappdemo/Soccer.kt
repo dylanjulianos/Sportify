@@ -23,7 +23,7 @@ private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
 
 
-class Badminton : Fragment() {
+class Soccer : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
@@ -31,7 +31,7 @@ class Badminton : Fragment() {
     private val firestore = FirebaseFirestore.getInstance()
     private var gridLayoutManager: GridLayoutManager? = null
 
-//    private var layoutManager: RecyclerView.LayoutManager? = null
+    //    private var layoutManager: RecyclerView.LayoutManager? = null
     private var adapter: RecyclerView.Adapter<MyAdapter.ViewHolder>? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -49,10 +49,10 @@ class Badminton : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        val v = inflater.inflate(R.layout.fragment_badminton, container, false)
+        val v = inflater.inflate(R.layout.fragment_soccer, container, false)
         val collectionRef = firestore.collection("Items")
         val fieldName = "sport_category"
-        val desiredValue = "Badminton"
+        val desiredValue = "Soccer"
         val query = collectionRef.whereEqualTo(fieldName,desiredValue)
 
         val item_list = v.findViewById(R.id.RecyclerView) as RecyclerView
@@ -60,10 +60,10 @@ class Badminton : Fragment() {
 
         query
             .get().addOnSuccessListener { result ->
-            val dataset = result.documents
-            val adapter = MyAdapter(dataset, parentFragmentManager)
-            item_list.adapter = adapter
-        }
+                val dataset = result.documents
+                val adapter = MyAdapter(dataset, parentFragmentManager)
+                item_list.adapter = adapter
+            }
             .addOnFailureListener { exception ->
                 // Handle any errors
                 Log.e(TAG, "Error getting documents: ", exception)
@@ -84,7 +84,7 @@ class Badminton : Fragment() {
         // TODO: Rename and change types and number of parameters
         @JvmStatic
         fun newInstance(param1: String, param2: String) =
-            Badminton().apply {
+            Soccer().apply {
                 arguments = Bundle().apply {
                     putString(ARG_PARAM1, param1)
                     putString(ARG_PARAM2, param2)

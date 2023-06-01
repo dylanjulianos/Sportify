@@ -13,6 +13,7 @@ import android.widget.Toast
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.FirebaseApp
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.storage.FirebaseStorage
 import java.io.FileNotFoundException
 
@@ -37,8 +38,8 @@ class Profile : AppCompatActivity() {
         showusername = findViewById(R.id.showusername)
         showemail = findViewById(R.id.showemail)
 
-        val docRef = db.collection("Customers")
-            .document("JuOlJK65CMZZgJk4y47g")
+        val docRef = db.collection("Users")
+            .document("LHGCSJ8AIc7XPXprVqWx")
 //            .document(uid!!)
         docRef.get()
             .addOnSuccessListener { document ->
