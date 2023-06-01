@@ -169,6 +169,7 @@ class admin_add_item : Fragment() {
             item_price.setText("")
             item_sport_type.setText("")
             item_bio.setText("")
+            pick_image_button.setImageResource(R.drawable.baseline_camera_alt_24)
         }
 
         return v
