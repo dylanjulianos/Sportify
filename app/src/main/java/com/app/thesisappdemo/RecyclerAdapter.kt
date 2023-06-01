@@ -1,5 +1,7 @@
 package com.app.thesisappdemo
 
+import android.content.ClipData.Item
+import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,13 +10,10 @@ import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.FragmentManager
-import androidx.fragment.app.FragmentTransaction
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
 import com.squareup.picasso.Picasso
-import kotlinx.coroutines.currentCoroutineContext
-import kotlin.coroutines.coroutineContext
 
 class RecyclerAdapter(private val dataset: List<DocumentSnapshot>, private val fragmentManager: FragmentManager): RecyclerView.Adapter<RecyclerAdapter.ViewHolder>() {
 
@@ -44,7 +43,10 @@ class RecyclerAdapter(private val dataset: List<DocumentSnapshot>, private val f
         }
 
         holder.edit_item_button.setOnClickListener{
+            val bundle = Bundle()
+            bundle.putString("kode", kode_barang.toString())
             val hal_edit_item = admin_edit_item()
+            hal_edit_item.arguments = bundle
             val transaction = fragmentManager.beginTransaction()
             transaction.replace(R.id.frame_layout, hal_edit_item)
             transaction.commit()
@@ -58,9 +60,9 @@ class RecyclerAdapter(private val dataset: List<DocumentSnapshot>, private val f
             documentRef.delete().addOnSuccessListener {
                 // Document deleted successfully
                 Toast.makeText(holder.itemView.context, "Item has been deleted", Toast.LENGTH_SHORT).show()
-                val hal_awal = admin_home()
+                val refresh_halaman = admin_home()
                 val transaction = fragmentManager.beginTransaction()
-                transaction.replace(R.id.frame_layout, hal_awal)
+                transaction.replace(R.id.frame_layout, refresh_halaman)
                 transaction.commit()
             }
                 .addOnFailureListener { e ->
