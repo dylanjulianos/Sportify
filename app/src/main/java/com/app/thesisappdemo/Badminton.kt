@@ -13,8 +13,7 @@ import androidx.fragment.app.FragmentTransaction
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import androidx.recyclerview.widget.RecyclerView.Recycler
-import com.google.android.material.floatingactionbutton.FloatingActionButton
+import android.content.Intent
 import com.google.firebase.firestore.FirebaseFirestore
 
 // TODO: Rename parameter arguments, choose names that match
@@ -63,12 +62,11 @@ class Badminton : Fragment() {
             val dataset = result.documents
             val adapter = MyAdapter(dataset, parentFragmentManager)
             item_list.adapter = adapter
-        }
+            }
             .addOnFailureListener { exception ->
                 // Handle any errors
                 Log.e(TAG, "Error getting documents: ", exception)
             }
-
         return v
     }
 

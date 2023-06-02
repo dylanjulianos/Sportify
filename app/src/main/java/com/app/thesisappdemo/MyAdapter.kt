@@ -5,6 +5,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.firestore.DocumentSnapshot
@@ -12,6 +13,9 @@ import com.squareup.picasso.Picasso
 import java.text.NumberFormat
 
 class MyAdapter(private val dataset: List<DocumentSnapshot>, private val fragmentManager: FragmentManager): RecyclerView.Adapter<MyAdapter.ViewHolder>() {
+
+    var onItemClick : ((DocumentSnapshot) -> Unit)? = null
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyAdapter.ViewHolder {
         val v = LayoutInflater.from(parent.context).inflate(R.layout.recycleritem, parent, false)
 
@@ -37,6 +41,11 @@ class MyAdapter(private val dataset: List<DocumentSnapshot>, private val fragmen
         } else {
             // If imageUrl is null or empty, you can set a placeholder image or handle it differently
             holder.itemImage.setImageResource(R.drawable.item)
+        }
+
+        holder.itemImage.setOnClickListener{
+            onItemClick?.invoke(documentSnapshot)
+
         }
 
     }
