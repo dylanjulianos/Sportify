@@ -1,0 +1,272 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <TextView
+        android:id="@+id/titleTransaction"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Your Current Transaction"
+        android:textSize="20dp"
+        android:layout_marginTop="20dp"
+        android:fontFamily="@font/inter_semibold"
+        android:textColor="@color/black"
+        android:layout_marginLeft="20dp"/>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:padding="20dp">
+
+        <TableLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toTopOf="@id/titleTransaction"
+            tools:ignore="NotSibling">
+
+            <!--Header-->
+            <TableRow
+                android:id="@+id/linearLayout1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintTop_toTopOf="@id/recyclerView_Layout"
+                android:background="@drawable/header_shape">
+
+                <!--Name-->
+                <TextView
+                    android:id="@+id/nameTable"
+                    android:layout_width="0dp"
+                    android:layout_height="50dp"
+                    android:layout_weight="1"
+                    android:text="Detail"
+                    android:textColor="@color/black"
+                    android:fontFamily="@font/inter_semibold"
+                    android:gravity="center"/>
+
+                <!--Description-->
+                <TextView
+                    android:id="@+id/descriptionTable"
+                    android:layout_width="0dp"
+                    android:layout_height="50dp"
+                    android:layout_weight="2"
+                    android:text="Description"
+                    android:textColor="@color/black"
+                    android:fontFamily="@font/inter_semibold"
+                    android:gravity="center"/>
+            </TableRow>
+
+            <TableRow>
+
+                <!--Item Name-->
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="50dp"
+                    android:layout_weight="1"
+                    android:text="Item Name"
+                    android:textColor="@color/black"
+                    android:fontFamily="@font/inter_semibold"
+                    android:gravity="center"
+                    android:background="@drawable/cell_shape"/>
+
+                <!--Description-->
+                <TextView
+                    android:id="@+id/transactionItemName"
+                    android:layout_width="0dp"
+                    android:layout_height="50dp"
+                    android:layout_weight="2"
+                    android:text="Description"
+                    android:textColor="@color/black"
+                    android:fontFamily="@font/inter"
+                    android:gravity="center"
+                    android:background="@drawable/cell_shape"/>
+            </TableRow>
+
+            <TableRow>
+
+                <!--Customer Name-->
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="50dp"
+                    android:layout_weight="1"
+                    android:text="Customer Name"
+                    android:textColor="@color/black"
+                    android:fontFamily="@font/inter_semibold"
+                    android:gravity="center"
+                    android:background="@drawable/cell_shape"/>
+
+                <!--Description-->
+                <TextView
+                    android:id="@+id/transactionCustomerName"
+                    android:layout_width="0dp"
+                    android:layout_height="50dp"
+                    android:layout_weight="2"
+                    android:text="Description"
+                    android:textColor="@color/black"
+                    android:fontFamily="@font/inter"
+                    android:gravity="center"
+                    android:background="@drawable/cell_shape"/>
+            </TableRow>
+
+            <TableRow>
+
+                <!--Customer Name-->
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="50dp"
+                    android:layout_weight="1"
+                    android:text="Payment"
+                    android:textColor="@color/black"
+                    android:fontFamily="@font/inter_semibold"
+                    android:gravity="center"
+                    android:background="@drawable/cell_shape"/>
+
+                <!--Description-->
+                <TextView
+                    android:id="@+id/transactionPayment"
+                    android:layout_width="0dp"
+                    android:layout_height="50dp"
+                    android:layout_weight="2"
+                    android:text="Description"
+                    android:textColor="@color/black"
+                    android:fontFamily="@font/inter"
+                    android:gravity="center"
+                    android:background="@drawable/cell_shape"/>
+            </TableRow>
+
+            <TableRow>
+
+                <!--Customer Name-->
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="50dp"
+                    android:layout_weight="1"
+                    android:text="Phone Number"
+                    android:textColor="@color/black"
+                    android:fontFamily="@font/inter_semibold"
+                    android:gravity="center"
+                    android:background="@drawable/cell_shape"/>
+
+                <!--Description-->
+                <TextView
+                    android:id="@+id/transactionPhoneNumber"
+                    android:layout_width="0dp"
+                    android:layout_height="50dp"
+                    android:layout_weight="2"
+                    android:text="Description"
+                    android:textColor="@color/black"
+                    android:fontFamily="@font/inter"
+                    android:gravity="center"
+                    android:background="@drawable/cell_shape"/>
+            </TableRow>
+
+            <TableRow>
+
+                <!--Customer Name-->
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="50dp"
+                    android:layout_weight="1"
+                    android:text="Quantity"
+                    android:textColor="@color/black"
+                    android:fontFamily="@font/inter_semibold"
+                    android:gravity="center"
+                    android:background="@drawable/cell_shape"/>
+
+                <!--Description-->
+                <TextView
+                    android:id="@+id/transactionQuantity"
+                    android:layout_width="0dp"
+                    android:layout_height="50dp"
+                    android:layout_weight="2"
+                    android:text="Description"
+                    android:textColor="@color/black"
+                    android:fontFamily="@font/inter"
+                    android:gravity="center"
+                    android:background="@drawable/cell_shape"/>
+            </TableRow>
+
+            <TableRow>
+
+                <!--Customer Name-->
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="50dp"
+                    android:layout_weight="1"
+                    android:text="Rental Date"
+                    android:textColor="@color/black"
+                    android:fontFamily="@font/inter_semibold"
+                    android:gravity="center"
+                    android:background="@drawable/cell_shape"/>
+
+                <!--Description-->
+                <TextView
+                    android:id="@+id/transactionRentalDate"
+                    android:layout_width="0dp"
+                    android:layout_height="50dp"
+                    android:layout_weight="2"
+                    android:text="Description"
+                    android:textColor="@color/black"
+                    android:fontFamily="@font/inter"
+                    android:gravity="center"
+                    android:background="@drawable/cell_shape"/>
+            </TableRow>
+
+            <TableRow>
+
+                <!--Customer Name-->
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="50dp"
+                    android:layout_weight="1"
+                    android:text="Rental Duration"
+                    android:textColor="@color/black"
+                    android:fontFamily="@font/inter_semibold"
+                    android:gravity="center"
+                    android:background="@drawable/cell_shape"/>
+
+                <!--Description-->
+                <TextView
+                    android:id="@+id/transactionRentalDuration"
+                    android:layout_width="0dp"
+                    android:layout_height="50dp"
+                    android:layout_weight="2"
+                    android:text="Description"
+                    android:textColor="@color/black"
+                    android:fontFamily="@font/inter"
+                    android:gravity="center"
+                    android:background="@drawable/cell_shape"/>
+            </TableRow>
+
+            <TableRow>
+
+                <!--Customer Name-->
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="50dp"
+                    android:layout_weight="1"
+                    android:text="Total Price"
+                    android:textColor="@color/black"
+                    android:fontFamily="@font/inter_semibold"
+                    android:gravity="center"
+                    android:background="@drawable/cell_shape"/>
+
+                <!--Description-->
+                <TextView
+                    android:id="@+id/transactionTotalPrice"
+                    android:layout_width="0dp"
+                    android:layout_height="50dp"
+                    android:layout_weight="2"
+                    android:text="Description"
+                    android:textColor="@color/black"
+                    android:fontFamily="@font/inter"
+                    android:gravity="center"
+                    android:background="@drawable/cell_shape"/>
+            </TableRow>
+        </TableLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>

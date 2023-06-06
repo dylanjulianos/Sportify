@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "692473558456",
+    "firebase_url": "https://sportify-52907-default-rtdb.firebaseio.com",
+    "project_id": "sportify-52907",
+    "storage_bucket": "sportify-52907.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:692473558456:android:2a7b3507ac55b8f9d94b4d",
+        "android_client_info": {
+          "package_name": "com.app.thesisappdemo"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "692473558456-0i5o08aqlr1pikodis0cutios7lqs8el.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD3hSqC49l67xqyx6vwSE8Wu8Hj2ir_yKg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "692473558456-0i5o08aqlr1pikodis0cutios7lqs8el.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

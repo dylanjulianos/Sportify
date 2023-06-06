@@ -10,10 +10,9 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="Sportify"
-        android:textSize="30dp"
         android:fontFamily="@font/chicle"
-        android:textColor="@color/colorbarmenu">
-    </TextView>
+        android:text="sportify"
+        android:textColor="@color/colorbarmenu"
+        android:textSize="30dp"></TextView>
 
 </FrameLayout>
