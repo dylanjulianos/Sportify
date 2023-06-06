@@ -7,6 +7,7 @@
     android:layout_gravity="left"
     android:layout_margin="5dp"
     android:layout_marginTop="150dp"
+    android:clickable="true"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     app:cardBackgroundColor="#00BCD4"
     app:cardCornerRadius="12dp"
@@ -38,7 +39,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/item_display_bio"
+            android:id="@+id/item_display_price"
             android:layout_width="230dp"
             android:layout_height="16dp"
             android:layout_marginStart="16dp"

@@ -1,13 +1,18 @@
 package com.app.thesisappdemo
 
+import android.content.ContentValues
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.fragment.app.FragmentTransaction
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.google.firebase.firestore.FirebaseFirestore
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -24,7 +29,12 @@ class admin_transaction : Fragment() {
     private var param1: String? = null
     private var param2: String? = null
 
+    private val firestore = FirebaseFirestore.getInstance()
+    private var layoutManager: RecyclerView.LayoutManager? = null
+    private var adapter: RecyclerView.Adapter<RecyclerAdapterTransactionAdmin.ViewHolder>? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
+        layoutManager = LinearLayoutManager(getActivity())
         super.onCreate(savedInstanceState)
         arguments?.let {
             param1 = it.getString(ARG_PARAM1)
@@ -40,8 +50,20 @@ class admin_transaction : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         val v = inflater.inflate(R.layout.fragment_admin_transaction, container, false)
-
         val profile_icon = v.findViewById(R.id.admin_profile_icon) as ImageView
+        val transaction_list = v.findViewById(R.id.RecyclerView_Transaction_admin) as RecyclerView
+        transaction_list.layoutManager = layoutManager
+
+        firestore.collection("Transaction").get().addOnSuccessListener { result ->
+            val dataset = result.documents
+            val adapter = RecyclerAdapterTransactionAdmin(dataset)
+            transaction_list.adapter = adapter
+        }
+            .addOnFailureListener { exception ->
+                // Handle any errors
+                Log.e(ContentValues.TAG, "Error getting documents: ", exception)
+            }
+
 
         profile_icon.setOnClickListener {
             val hal_profile_admin = admin_profile_page()

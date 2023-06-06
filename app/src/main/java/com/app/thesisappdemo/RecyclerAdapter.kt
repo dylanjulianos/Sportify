@@ -9,6 +9,7 @@ import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
+import androidx.cardview.widget.CardView
 import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.firestore.DocumentSnapshot
@@ -35,7 +36,7 @@ class RecyclerAdapter(private val dataset: List<DocumentSnapshot>, private val f
         val db = FirebaseFirestore.getInstance()
 
         holder.itemName.text = nama
-        holder.itemBio.text = description
+        holder.itemPrice.text = "Rp. " + harga + "- /day"
         if (imageUrl != null) { Picasso.get().load(imageUrl).into(holder.itemImage)
         } else {
             // If imageUrl is null or empty, you can set a placeholder image or handle it differently
@@ -80,14 +81,14 @@ class RecyclerAdapter(private val dataset: List<DocumentSnapshot>, private val f
     inner class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
         var itemImage : ImageView
         var itemName : TextView
-        var itemBio : TextView
+        var itemPrice : TextView
         lateinit var edit_item_button : ImageButton
         lateinit var delete_item_button : ImageButton
 
         init {
             itemImage = itemView.findViewById(R.id.item_display_picture)
             itemName = itemView.findViewById(R.id.item_display_name)
-            itemBio = itemView.findViewById(R.id.item_display_bio)
+            itemPrice = itemView.findViewById(R.id.item_display_price)
             edit_item_button = itemView.findViewById(R.id.edit_item_button)
             delete_item_button = itemView.findViewById(R.id.delete_item_button)
         }
