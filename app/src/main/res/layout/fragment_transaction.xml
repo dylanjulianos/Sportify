@@ -6,6 +6,21 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".TransactionFragment">
 
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/btnWhatsappTransaction"
+            android:layout_width="65dp"
+            android:layout_height="67dp"
+            android:src="@drawable/logo_whatsapp"
+            android:layout_margin="20dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintRight_toRightOf="parent">
+        </ImageView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
     <TextView
         android:id="@+id/title"
         android:layout_width="wrap_content"

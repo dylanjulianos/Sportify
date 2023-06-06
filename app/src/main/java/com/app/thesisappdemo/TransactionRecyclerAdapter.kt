@@ -26,13 +26,12 @@ class TransactionRecyclerAdapter(private val dataset: List<DocumentSnapshot>, pr
         val db = FirebaseFirestore.getInstance()
 //        val collectionRef = db.collection("Transaction")
 
-        holder.customerNameCard.text = documentSnapshot.get("customerName").toString()
-        holder.itemNameCard.text = documentSnapshot.get("itemName").toString()
-        holder.phoneNumberCard.text = documentSnapshot.get("phoneNumber").toString()
-        holder.quantityCard.text = documentSnapshot.get("quantity").toString()
-        holder.rentDateCard.text = documentSnapshot.get("rentalDate").toString()
-        holder.rentDurationCard.text = documentSnapshot.get("rentalDuration").toString()
-        holder.totalPriceCard.text = "Rp" + documentSnapshot.get("totalPrice").toString()
+        holder.customerNameCard.text = documentSnapshot.get("CustomerName").toString()
+        holder.itemNameCard.text = documentSnapshot.get("ItemName").toString()
+        holder.quantityCard.text = documentSnapshot.get("Quantity").toString() + " pc(s)"
+        holder.rentDateCard.text = documentSnapshot.get("RentDate").toString()
+        holder.rentDurationCard.text = documentSnapshot.get("RentDuration").toString() + " day(s)"
+        holder.totalPriceCard.text = "Rp" + documentSnapshot.get("TotalPrice").toString()
 
 //        collectionRef.get()
 //            .addOnSuccessListener { querySnapshot ->
@@ -64,7 +63,6 @@ class TransactionRecyclerAdapter(private val dataset: List<DocumentSnapshot>, pr
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         var customerNameCard: TextView
         var itemNameCard: TextView
-        var phoneNumberCard: TextView
         var quantityCard: TextView
         var rentDateCard: TextView
         var rentDurationCard: TextView
@@ -73,7 +71,6 @@ class TransactionRecyclerAdapter(private val dataset: List<DocumentSnapshot>, pr
         init {
             customerNameCard = itemView.findViewById(R.id.customerNameCard)
             itemNameCard = itemView.findViewById(R.id.itemNameCard)
-            phoneNumberCard = itemView.findViewById(R.id.phoneNumberCard)
             quantityCard = itemView.findViewById(R.id.quantityCard)
             rentDateCard = itemView.findViewById(R.id.rentDateCard)
             rentDurationCard = itemView.findViewById(R.id.rentDurationCard)
