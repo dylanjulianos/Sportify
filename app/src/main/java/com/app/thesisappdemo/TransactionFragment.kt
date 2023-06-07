@@ -1,59 +1,55 @@
 package com.app.thesisappdemo
 
+import android.content.ContentValues.TAG
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
-import androidx.fragment.app.Fragment
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.app.thesisappdemo.databinding.FragmentTransactionBinding
+import com.google.firebase.firestore.FirebaseFirestore
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [TransactionFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class TransactionFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
+
+    private val firestore = FirebaseFirestore.getInstance()
+    private var layoutManager: RecyclerView.LayoutManager? = null
+    private var adapter: RecyclerView.Adapter<TransactionRecyclerAdapter.ViewHolder>? = null
+    private lateinit var binding: FragmentTransactionBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        layoutManager = LinearLayoutManager(getActivity())
         super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
+    }
+
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+
+        val v = inflater.inflate(R.layout.fragment_transaction, container, false)
+        val transaction_List = v.findViewById(R.id.RecylerViewTransaction) as RecyclerView
+        transaction_List.layoutManager = layoutManager
+
+        firestore.collection("Transaction").get().addOnSuccessListener { result ->
+            val dataset = result.documents
+            val adapter = TransactionRecyclerAdapter(dataset, parentFragmentManager)
+            transaction_List.adapter = adapter
         }
-    }
-
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_transaction, container, false)
-    }
-
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment TransactionFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            TransactionFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
+            .addOnFailureListener { exception ->
+                Log.e(TAG, "Error", exception)
             }
+        return v
+
+        binding.btnWhatsappTransaction.setOnClickListener {
+            //val url = "http://www.google.com"
+            val url = "https://wa.link/8j16c2"
+            val intent = Intent(Intent.ACTION_VIEW)
+            Toast.makeText(context, "Please wait...", Toast.LENGTH_LONG).show()
+            intent.data = Uri.parse(url)
+            startActivity(intent)
+        }
     }
 }
