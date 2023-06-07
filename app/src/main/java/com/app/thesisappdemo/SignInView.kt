@@ -70,7 +70,7 @@ class SignInView: AppCompatActivity() {
                 val role = documentSnapshot.getString("role")
                 // Use the role as needed
                 if (role == "Admin") {
-                    val intent = Intent(this@SignInView, AdminView::class.java)
+                    val intent = Intent(this@SignInView, AdminMain::class.java)
                     startActivity(intent)
                 } else if (role == "Customer") {
                     val intent = Intent(this@SignInView, CustomerView::class.java)

@@ -78,7 +78,7 @@ class RegistrationView: AppCompatActivity() {
             userCollection.add(user).await()
             withContext(Dispatchers.Main) {
                 Toast.makeText(this@RegistrationView, "Successfully creating account!", Toast.LENGTH_LONG).show()
-                val intent = Intent(this@RegistrationView, MainActivity::class.java)
+                val intent = Intent(this@RegistrationView, SignInView::class.java)
                 startActivity(intent)
 
                 //finish() biar user gabisa back ke register screen lagi
