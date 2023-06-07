@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="300dp"
+    android:layout_margin="15dp"
+    android:layout_marginTop="150dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardBackgroundColor="#F4F4F4"
+    app:cardCornerRadius="12dp"
+    app:cardElevation="3dp"
+    app:contentPadding="4dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="4dp">
+
+        <ImageView
+            android:id="@+id/itemImageCard"
+            android:layout_width="175dp"
+            android:layout_height="175dp"
+            android:scaleType="centerCrop"
+            android:layout_marginLeft="10dp"
+            android:layout_marginBottom="40dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+        </ImageView>
+
+        <Button
+            android:id="@+id/checkoutButton"
+            android:layout_width="130dp"
+            android:layout_height="40dp"
+            android:layout_marginLeft="34dp"
+            android:text="Checkout"
+            android:fontFamily="@font/inter_semibold"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+            app:cornerRadius="10dp"
+            android:backgroundTint="#0089EC"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/itemImageCard"
+            app:layout_constraintBottom_toBottomOf="parent" />
+
+        <TextView
+            android:id="@+id/customerNameCard"
+            android:fontFamily="@font/inter"
+            android:textSize="15sp"
+            android:textColor="@color/black"
+            android:layout_width="150dp"
+            android:layout_height="20dp"
+            android:layout_marginTop="10dp"
+            app:layout_constraintLeft_toRightOf="@id/itemImageCard"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            android:textAlignment="textStart"
+            android:layout_marginLeft="40dp">
+        </TextView>
+
+        <TextView
+            android:id="@+id/itemNameCard"
+            android:layout_width="150dp"
+            android:layout_height="20dp"
+            android:layout_marginLeft="40dp"
+            android:layout_marginTop="10dp"
+            android:fontFamily="@font/inter"
+            android:textAlignment="textStart"
+            android:textColor="@color/black"
+            android:textSize="15sp"
+            app:layout_constraintLeft_toRightOf="@id/itemImageCard"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/customerNameCard" />
+
+        <TextView
+            android:id="@+id/rentDurationCard"
+            android:fontFamily="@font/inter"
+            android:textSize="15sp"
+            android:textColor="@color/black"
+            android:layout_width="150dp"
+            android:layout_height="20dp"
+            android:layout_marginTop="10dp"
+            app:layout_constraintLeft_toRightOf="@id/itemImageCard"
+            app:layout_constraintTop_toBottomOf="@id/itemNameCard"
+            app:layout_constraintRight_toRightOf="parent"
+            android:textAlignment="textStart"
+            android:layout_marginLeft="40dp">
+        </TextView>
+
+        <TextView
+            android:id="@+id/rentDateCard"
+            android:fontFamily="@font/inter"
+            android:textSize="15sp"
+            android:textColor="@color/black"
+            android:layout_width="150dp"
+            android:layout_height="20dp"
+            android:layout_marginTop="10dp"
+            app:layout_constraintLeft_toRightOf="@id/itemImageCard"
+            app:layout_constraintTop_toBottomOf="@id/rentDurationCard"
+            app:layout_constraintRight_toRightOf="parent"
+            android:textAlignment="textStart"
+            android:layout_marginLeft="40dp">
+        </TextView>
+
+        <TextView
+            android:id="@+id/quantityCard"
+            android:fontFamily="@font/inter"
+            android:textSize="15sp"
+            android:textColor="@color/black"
+            android:layout_width="150dp"
+            android:layout_height="20dp"
+            android:layout_marginTop="10dp"
+            app:layout_constraintLeft_toRightOf="@id/itemImageCard"
+            app:layout_constraintTop_toBottomOf="@id/rentDateCard"
+            app:layout_constraintRight_toRightOf="parent"
+            android:textAlignment="textStart"
+            android:layout_marginLeft="40dp">
+        </TextView>
+
+        <TextView
+            android:id="@+id/paymentCard"
+            android:fontFamily="@font/inter"
+            android:textSize="15sp"
+            android:textColor="@color/black"
+            android:layout_width="150dp"
+            android:layout_height="20dp"
+            android:layout_marginTop="10dp"
+            app:layout_constraintLeft_toRightOf="@id/itemImageCard"
+            app:layout_constraintTop_toBottomOf="@id/quantityCard"
+            app:layout_constraintRight_toRightOf="parent"
+            android:textAlignment="textStart"
+            android:layout_marginLeft="40dp">
+        </TextView>
+
+        <TextView
+            android:id="@+id/pickupPointCard"
+            android:fontFamily="@font/inter"
+            android:textSize="15sp"
+            android:textColor="@color/black"
+            android:layout_width="150dp"
+            android:layout_height="20dp"
+            android:layout_marginTop="10dp"
+            app:layout_constraintLeft_toRightOf="@id/itemImageCard"
+            app:layout_constraintTop_toBottomOf="@id/paymentCard"
+            app:layout_constraintRight_toRightOf="parent"
+            android:textAlignment="textStart"
+            android:layout_marginLeft="40dp">
+        </TextView>
+
+        <TextView
+            android:id="@+id/itemPriceCard"
+            android:fontFamily="@font/inter_semibold"
+            android:textSize="12sp"
+            android:textColor="@color/black"
+            android:layout_width="150dp"
+            android:layout_height="20dp"
+            android:layout_marginTop="10dp"
+            app:layout_constraintLeft_toRightOf="@id/itemImageCard"
+            app:layout_constraintTop_toBottomOf="@id/pickupPointCard"
+            app:layout_constraintRight_toRightOf="parent"
+            android:textAlignment="textStart"
+            android:layout_marginLeft="40dp">
+        </TextView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.cardview.widget.CardView>
