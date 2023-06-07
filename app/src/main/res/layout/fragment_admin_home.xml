@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".admin_home">
+
+    <!-- TODO: Update blank fragment layout -->
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/chicle"
+        android:text="Sportify"
+        android:textColor="@color/colorbarmenu"
+        android:textSize="60dp"
+        android:textStyle="bold"
+        android:layout_gravity="top"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Items"
+        android:textSize="45dp"
+        android:layout_marginTop="90dp" />
+
+    <ImageView
+        android:id="@+id/admin_profile_icon"
+        android:layout_width="93dp"
+        android:layout_height="93dp"
+        android:layout_gravity="top"
+        android:layout_marginLeft="320dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:visibility="visible"
+        android:src="@drawable/baseline_person_24"
+        tools:src="@drawable/baseline_person_24" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/AddItemButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:layout_marginLeft="350dp"
+        android:clickable="true"
+        android:src="@android:drawable/ic_input_add"
+        app:backgroundTint="#0088EB" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/recycler_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="150dp">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/RecyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</FrameLayout>
