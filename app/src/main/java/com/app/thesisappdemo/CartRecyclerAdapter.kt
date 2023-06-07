@@ -22,29 +22,8 @@ class CartRecyclerAdapter (private val dataset: List<DocumentSnapshot>, private 
         val firestore = Firebase.firestore
         val itemCollectionRef = Firebase.firestore.collection("Transaction")
 
-        val kode = bundle?.getString("kode")
-        val collection = "Items"
-        val firestoreref = firestore.collection(collection).document(kode.toString())
-
-        val picture = v.findViewById(R.id.imagevieworder) as ImageView
-        val item_name = v.findViewById(R.id.productnameorder) as TextView
-        val price = v.findViewById(R.id.totalprice) as TextInputEditText
-        val save_button = v.findViewById(R.id.buttonorder) as Button
-        val pickup_point = "Binus @Malang, Jl. Araya Mansion No.8 - 22"
-        val payment = "Cash"
-
         checkoutButton.setOnClickListener {
-            val kode_transaksi = "TC" + transaction_id
-            val item_name_input = item_name.text.toString()
-            val customer_name_input = customer_name.text.toString()
 
-            val item_price_input = price.text.toString()
-            val pickup_point_input = pickup_point
-            val payment_input = payment
-
-            val phone_number_input = phone_number_new.text.toString()
-            val rental_duration_input = rental_duration_new.text.toString().toFloat()
-            val rental_date_input = rental_date.text.toString()
         }
 
         return ViewHolder(v)
