@@ -1,13 +1,15 @@
 package com.app.thesisappdemo
 
+import java.sql.Timestamp
+
 data class TransactionItems(
-    var transaction_id : String,
-    var item_name : String,
-    var customer_name : String,
-//    var price : Float,
-    var pickup_point : String,
-//    var payment : String,
-//    var phone_number : Float,
-//    var rental_duration : Float,
-//    var rental_date : Float
+    var TransactionId : String,
+    var ItemName : String,
+    var CustomerName : String,
+    var TotalPrice : String,
+    var PickupPoint : String,
+    var Payment : String,
+    var PhoneNumber : String,
+    var RentDuration : Float,
+    var RentDate : String
 )

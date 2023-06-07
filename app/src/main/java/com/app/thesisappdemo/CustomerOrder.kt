@@ -3,11 +3,13 @@ package com.app.thesisappdemo
 import android.app.DatePickerDialog
 import android.net.Uri
 import android.os.Bundle
+import android.text.method.DigitsKeyListener
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
@@ -18,8 +20,6 @@ import com.google.android.material.textfield.TextInputLayout
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.squareup.picasso.Picasso
-import kotlinx.android.synthetic.main.fragment_customer_order.customername
-import kotlinx.android.synthetic.main.fragment_customer_order.customerpickup
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -47,8 +47,11 @@ class CustomerOrder : Fragment(){
 //    private val binding get() = _binding!!
 
     private lateinit var binding : FragmentCustomerOrderBinding
-    private lateinit var tvDatePicker : TextInputEditText
+//    private lateinit var tvDatePicker : TextInputEditText
     private lateinit var buttonDatePicker : TextInputLayout
+    private lateinit var phone_number : TextInputEditText
+    private lateinit var rental_duration : TextInputEditText
+
 
     private val firestore = Firebase.firestore
 
@@ -60,7 +63,7 @@ class CustomerOrder : Fragment(){
         }
     }
 
-    private val itemCollectionRef = Firebase.firestore.collection("Transaction Hanzel")
+    private val itemCollectionRef = Firebase.firestore.collection("Cart")
     var transaction_id = 1
 
     override fun onCreateView(
@@ -78,21 +81,29 @@ class CustomerOrder : Fragment(){
         val picture = v.findViewById(R.id.imagevieworder) as ImageView
         val item_name = v.findViewById(R.id.productnameorder) as TextView
         val price = v.findViewById(R.id.totalprice) as TextInputEditText
-
-        val button = v.findViewById(R.id.rentaldate) as TextInputEditText
         val save_button = v.findViewById(R.id.buttonorder) as Button
+        val pickup_point = "Binus @Malang, Jl. Araya Mansion No.8 - 22"
+        val payment = "Cash"
 
-//        val pickup_point = v.findViewById(R.id.customerpickup) as TextInputEditText
-        val pickup_point = customerpickup.setText("Binus @Malang, Jl. Araya Mansion No.8 - 22")
+//        val button = v.findViewById(R.id.rentaldate) as TextInputEditText
 
-        val payment = v.findViewById(R.id.payment) as TextInputEditText
-        val phone_number = v.findViewById(R.id.customerphone) as TextInputEditText
+        phone_number = v.findViewById(R.id.customerphone)
+        val digits = "0123456789"
+        val keyListener = DigitsKeyListener.getInstance(digits)
+        phone_number.keyListener = keyListener
+
+        rental_duration = v.findViewById(R.id.rentalduration)
+        rental_duration.keyListener = keyListener
+
+        val phone_number_new = v.findViewById(R.id.customerphone) as TextInputEditText
         val customer_name = v.findViewById(R.id.customername) as TextInputEditText
+        val rental_duration_new = v.findViewById(R.id.rentalduration) as TextInputEditText
+        val rental_date = v.findViewById(R.id.rentaldate) as TextInputEditText
 
         firestoreref.get().addOnSuccessListener { document ->
             Picasso.get().load(document.data?.get("image_url") as? String).into(picture)
             item_name.setText(document.data?.get("item_name") as? String)
-            price.setText("Rp" + document.data?.get("item_price").toString().toFloat() as? Float + "-/day")
+            price.setText("Rp" + document.data?.get("item_price").toString() as? String+ "-/day")
 
         }.addOnFailureListener {
                 e-> println("Error showing document: ${e.message}")
@@ -100,44 +111,74 @@ class CustomerOrder : Fragment(){
 
         binding = FragmentCustomerOrderBinding.inflate(layoutInflater)
 
-        tvDatePicker = v.findViewById(R.id.rentaldate)
+//        tvDatePicker = v.findViewById(R.id.rentaldate)
+//
+//        val myCalendar = Calendar.getInstance()
+//        val datePicker = DatePickerDialog.OnDateSetListener{
+//                view,year,month,dayOfMonth ->
+//            myCalendar.set(Calendar.YEAR, year)
+//            myCalendar.set(Calendar.MONTH, month)
+//            myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth)
+//            updateLable(myCalendar)
+//        }
 
-        val myCalendar = Calendar.getInstance()
-        val datePicker = DatePickerDialog.OnDateSetListener{
-                view,year,month,dayOfMonth ->
-            myCalendar.set(Calendar.YEAR, year)
-            myCalendar.set(Calendar.MONTH, month)
-            myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth)
-            updateLable(myCalendar)
-        }
-
-        button.setOnClickListener{
-            DatePickerDialog(requireActivity(), datePicker, myCalendar.get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
-                myCalendar.get(Calendar.DAY_OF_MONTH)).show()
-        }
+//        button.setOnClickListener{
+//            DatePickerDialog(requireActivity(), datePicker, myCalendar.get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
+//                myCalendar.get(Calendar.DAY_OF_MONTH)).show()
+//        }
 
         save_button.setOnClickListener{
             val kode_transaksi = "TC" + transaction_id
             val item_name_input = item_name.text.toString()
             val customer_name_input = customer_name.text.toString()
-//            val item_price_input = price.text.toString().toFloat()
-            val pickup_point_input = pickup_point.toString()
 
-            val item = TransactionItems(kode_transaksi, item_name_input, customer_name_input, pickup_point_input)
+            val item_price_input = price.text.toString()
+            val pickup_point_input = pickup_point
+            val payment_input = payment
 
+            val phone_number_input = phone_number_new.text.toString()
+            val rental_duration_input = rental_duration_new.text.toString().toFloat()
+            val rental_date_input = rental_date.text.toString()
+
+            val item = TransactionItems(
+                kode_transaksi
+                , item_name_input
+                , customer_name_input
+                , item_price_input
+                , pickup_point_input
+                , payment_input
+                , phone_number_input
+                , rental_duration_input
+                , rental_date_input
+            )
             saveItem(item)
-//            item_name.setText("")
-//            price.setText("")
+            customer_name.setText("")
+            phone_number_new.setText("")
+            rental_duration_new.setText("")
+            rental_date.setText("")
+
+            if (phone_number_input.isEmpty()) {
+                phone_number_new.error = "Please enter your phone number"
+            } else {
+
+            }
+
+            showToast("Data succesfully moved to Cart! ...")
         }
 
         return v
     }
 
-    private fun updateLable(myCalendar: Calendar) {
-        val myFormat = "dd/MM/yyyy"
-        val sdf = SimpleDateFormat(myFormat, Locale.UK)
-        tvDatePicker.setText(sdf.format(myCalendar.time))
+    private fun showToast(message: String) {
+        Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
     }
+
+
+//    private fun updateLable(myCalendar: Calendar) {
+//        val myFormat = "dd/MM/yyyy"
+//        val sdf = SimpleDateFormat(myFormat, Locale.UK)
+//        tvDatePicker.setText(sdf.format(myCalendar.time))
+//    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -149,11 +190,15 @@ class CustomerOrder : Fragment(){
                 val documentId = documentReference.id
 
                 val updatedDocument = hashMapOf(
-                    "item_name" to items.item_name,
-//                    "item_price" to items.price,
-                    "transaction_id" to documentId,
-                    "customer_name" to items.customer_name,
-                    "pickup_point" to items.pickup_point
+                    "ItemName" to items.ItemName,
+                    "TotalPrice" to items.TotalPrice,
+                    "TransactionId" to documentId,
+                    "CustomerName" to items.CustomerName,
+                    "PickupPoint" to items.PickupPoint,
+                    "Payment" to items.Payment,
+                    "PhoneNumber" to items.PhoneNumber,
+                    "RentDuration" to items.RentDuration,
+                    "RentDate" to items.RentDate
                 )
                 documentReference.set(updatedDocument).addOnSuccessListener {
                     println("Succesfully Added Item")
