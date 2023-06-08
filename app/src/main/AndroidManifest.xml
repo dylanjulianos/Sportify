@@ -3,6 +3,10 @@
     xmlns:tools="http://schemas.android.com/tools">
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
 
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -16,6 +20,21 @@
         <activity
             android:name=".SignInView"
             android:exported="true">
+        <activity
+            android:name=".TransactionSucceedActivity"
+            android:exported="false" />
+        <activity
+            android:name=".CustomerOrderActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Badminton"
+            android:exported="false" />
+        <activity
+            android:name=".Profile"
+            android:exported="false" />
+        <activity
+            android:name=".MainCustomer"
+            android:exported="false" />
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -33,7 +52,7 @@
         <activity android:name=".AdminMain"/>
         <activity android:name=".RegistrationView"/>
         <activity android:name= ".CustomerView" />
-        <activity android:name=".AdminView" />
+
     </application>
 
 </manifest>
