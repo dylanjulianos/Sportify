@@ -33,31 +33,33 @@ class CartRecyclerAdapter (private val dataset: List<DocumentSnapshot>, private 
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 
-        holder.checkoutButton.setOnClickListener {
-            val documentSnapshot = dataset[position]
-            val namaCustomer = documentSnapshot.getString("CustomerName")
-            val jemput = documentSnapshot.getString("PickupPoint")
-            val namaitem = documentSnapshot.getString("ItemName")
-            val tanggalsewa = documentSnapshot.getString("RentDate")
-            val durasisewa = documentSnapshot.getLong("RentDuration")
-            val totalharga = documentSnapshot.getString("TotalPrice")
-            val pembayaran = documentSnapshot.getString("Payment")
-            val nomor = documentSnapshot.getString("PhoneNumber")
-            val imageurl = documentSnapshot.getString("ImageUrl")
+        val documentSnapshot = dataset[position]
+        val namaCustomer = documentSnapshot.getString("CustomerName")
+        val jemput = documentSnapshot.getString("PickupPoint")
+        val namaitem = documentSnapshot.getString("ItemName")
+        val tanggalsewa = documentSnapshot.getString("RentDate")
+        val durasisewa = documentSnapshot.getLong("RentDuration")
+        val totalharga = documentSnapshot.getString("TotalPrice")
+        val pembayaran = documentSnapshot.getString("Payment")
+        val nomor = documentSnapshot.getString("PhoneNumber")
+        val imageurl = documentSnapshot.getString("ImageUrl")
+        val cartcode = documentSnapshot.getString("CartId")
 
-            if (imageurl != null) { Picasso.get().load(imageurl).into(holder.gambaritem)
-            } else {
-                // If imageUrl is null or empty, you can set a placeholder image or handle it differently
-                holder.gambaritem.setImageResource(R.drawable.item)
-            }
-            holder.customerNameCard.text = namaCustomer
-            holder.itemNameCard.text = namaitem
-            holder.pickupCard.text = jemput
-            holder.rentDateCard.text = tanggalsewa
-            holder.rentDurationCard.text = durasisewa.toString() + " day(s)"
-            holder.totalPriceCard.text = totalharga
-            holder.paymentCard.text = pembayaran
-            holder.phoneNumberCard.text = nomor
+        if (imageurl != null) { Picasso.get().load(imageurl).into(holder.gambaritem)
+        } else {
+            // If imageUrl is null or empty, you can set a placeholder image or handle it differently
+            holder.gambaritem.setImageResource(R.drawable.item)
+        }
+        holder.customerNameCard.text = namaCustomer
+        holder.itemNameCard.text = namaitem
+        holder.pickupCard.text = jemput
+        holder.rentDateCard.text = tanggalsewa
+        holder.rentDurationCard.text = durasisewa.toString() + " day(s)"
+        holder.totalPriceCard.text = totalharga
+        holder.paymentCard.text = pembayaran
+        holder.phoneNumberCard.text = nomor
+
+        holder.checkoutButton.setOnClickListener {
 
             val tambahTransaction = HashMap<String, Any>()
             tambahTransaction["ImageUrl"] = imageurl.toString()
@@ -94,6 +96,8 @@ class CartRecyclerAdapter (private val dataset: List<DocumentSnapshot>, private 
                     println("Error Checking Out Item: ${e.message}")
                 }
             }
+
+            firestore.collection("Cart").document(cartcode.toString()).delete()
 
         }
     }
