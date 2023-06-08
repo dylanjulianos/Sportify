@@ -17,6 +17,9 @@
         android:theme="@style/Theme.ThesisAppDemo"
         tools:targetApi="31">
         <activity
+            android:name=".TransactionSucceedActivity"
+            android:exported="false" />
+        <activity
             android:name=".CustomerOrderActivity"
             android:exported="false" />
         <activity

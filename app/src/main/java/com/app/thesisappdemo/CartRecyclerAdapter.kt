@@ -1,5 +1,6 @@
 package com.app.thesisappdemo
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -8,6 +9,7 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
+import androidx.core.content.ContextCompat.startActivity
 import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.firestore.DocumentSnapshot
@@ -26,6 +28,7 @@ class CartRecyclerAdapter (private val dataset: List<DocumentSnapshot>, private 
 
     private val firestore = Firebase.firestore
     private val firestoreRef = firestore.collection("Transaction")
+    private val firestoreSource = firestore.collection("Cart").document()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CartRecyclerAdapter.ViewHolder {
         val v = LayoutInflater.from(parent.context).inflate(R.layout.card_layout_cart, parent, false)
@@ -60,7 +63,7 @@ class CartRecyclerAdapter (private val dataset: List<DocumentSnapshot>, private 
         holder.paymentCard.text = pembayaran
         holder.phoneNumberCard.text = nomor
 
-        holder.checkoutButton.setOnClickListener {
+        holder.checkoutButton.setOnClickListener { view ->
 
             val tambahTransaction = HashMap<String, Any>()
             tambahTransaction["ImageUrl"] = imageurl.toString()
@@ -99,6 +102,9 @@ class CartRecyclerAdapter (private val dataset: List<DocumentSnapshot>, private 
             }
 
             firestore.collection("Cart").document(cartcode.toString()).delete()
+
+            val intent = Intent(view.context, TransactionSucceedActivity::class.java)
+            view.context.startActivity(intent)
 
         }
     }
