@@ -87,7 +87,7 @@
         </TextView>
 
         <TextView
-            android:id="@+id/quantityCard"
+            android:id="@+id/pickupCard"
             android:fontFamily="@font/inter"
             android:textSize="15sp"
             android:textColor="@color/black"
@@ -110,7 +110,7 @@
             android:layout_height="20dp"
             android:layout_marginTop="10dp"
             app:layout_constraintLeft_toRightOf="@id/itemImageCard"
-            app:layout_constraintTop_toBottomOf="@id/quantityCard"
+            app:layout_constraintTop_toBottomOf="@id/pickupCard"
             app:layout_constraintRight_toRightOf="parent"
             android:textAlignment="textStart"
             android:layout_marginLeft="40dp">

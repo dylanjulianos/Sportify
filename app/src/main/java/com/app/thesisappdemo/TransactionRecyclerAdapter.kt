@@ -3,6 +3,7 @@ package com.app.thesisappdemo
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.RecyclerView
@@ -10,6 +11,7 @@ import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Transaction
 import com.google.firebase.firestore.auth.User
+import com.squareup.picasso.Picasso
 import org.w3c.dom.Text
 import java.util.Date
 
@@ -25,10 +27,16 @@ class TransactionRecyclerAdapter(private val dataset: List<DocumentSnapshot>, pr
         val documentSnapshot = dataset[position]
         val db = FirebaseFirestore.getInstance()
 //        val collectionRef = db.collection("Transaction")
+        val imageurl = documentSnapshot.getString("ImageUrl")
 
+        if (imageurl != null) { Picasso.get().load(imageurl).into(holder.gambaritem)
+        } else {
+            // If imageUrl is null or empty, you can set a placeholder image or handle it differently
+            holder.gambaritem.setImageResource(R.drawable.item)
+        }
         holder.customerNameCard.text = documentSnapshot.get("CustomerName").toString()
         holder.itemNameCard.text = documentSnapshot.get("ItemName").toString()
-        holder.quantityCard.text = documentSnapshot.get("Quantity").toString() + " pc(s)"
+        holder.pickupCard.text = documentSnapshot.get("PickupPoint").toString()
         holder.rentDateCard.text = documentSnapshot.get("RentDate").toString()
         holder.rentDurationCard.text = documentSnapshot.get("RentDuration").toString() + " day(s)"
         holder.totalPriceCard.text = "Rp" + documentSnapshot.get("TotalPrice").toString()
@@ -63,15 +71,17 @@ class TransactionRecyclerAdapter(private val dataset: List<DocumentSnapshot>, pr
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         var customerNameCard: TextView
         var itemNameCard: TextView
-        var quantityCard: TextView
+        var pickupCard: TextView
         var rentDateCard: TextView
         var rentDurationCard: TextView
         var totalPriceCard: TextView
+        var gambaritem : ImageView
 
         init {
+            gambaritem = itemView.findViewById(R.id.itemImageCard)
             customerNameCard = itemView.findViewById(R.id.customerNameCard)
             itemNameCard = itemView.findViewById(R.id.itemNameCard)
-            quantityCard = itemView.findViewById(R.id.quantityCard)
+            pickupCard = itemView.findViewById(R.id.pickupCard)
             rentDateCard = itemView.findViewById(R.id.rentDateCard)
             rentDurationCard = itemView.findViewById(R.id.rentDurationCard)
             totalPriceCard = itemView.findViewById(R.id.itemPriceCard)
