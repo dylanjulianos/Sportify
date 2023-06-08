@@ -6,6 +6,7 @@ import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
+import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
@@ -21,6 +22,7 @@ import java.io.FileNotFoundException
 class Profile : AppCompatActivity() {
     private val REQUEST_CODE = 1
     private lateinit var camera: ImageView
+    private lateinit var logoutbutton : Button
 
 
     val db = FirebaseFirestore.getInstance()
@@ -62,6 +64,14 @@ class Profile : AppCompatActivity() {
         openGalleryButton.setOnClickListener{
             openGallery()
         }
+
+        logoutbutton = findViewById(R.id.logoutbutton)
+
+        logoutbutton.setOnClickListener{
+            val intent = Intent(this@Profile, SignInView::class.java)
+            startActivity(intent)
+        }
+
     }
 
     private fun openGallery(){
