@@ -19,17 +19,17 @@ class RecyclerAdapterTransactionAdmin(private val dataset: List<DocumentSnapshot
         val documentSnapshot = dataset[position]
         val namacustomer = documentSnapshot.getString("CustomerName")
         val namabarang = documentSnapshot.getString("ItemName")
-        val jumlahbarang = documentSnapshot.getLong("Quantity")
+        val jumlahbarang = documentSnapshot.getString("PickupPoint")
         val durasisewa = documentSnapshot.getLong("RentDuration")
         val tanggalsewa = documentSnapshot.getString("RentDate")
-        val totalharga = documentSnapshot.getLong("TotalPrice")
+        val harga = documentSnapshot.getString("TotalPrice")
 
         holder.CustomerName.text = namacustomer
         holder.ItemName.text = namabarang
-        holder.Quantity.text = jumlahbarang.toString()
+        holder.Pickup.text = jumlahbarang.toString()
         holder.RentDuration.text = durasisewa.toString() + "Day(s)"
         holder.RentDate.text = tanggalsewa
-        holder.TotalPrice.text = "Rp. " + totalharga + "-"
+        holder.Price.text = harga
     }
 
     override fun getItemCount(): Int {
@@ -39,18 +39,18 @@ class RecyclerAdapterTransactionAdmin(private val dataset: List<DocumentSnapshot
     inner class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
         var CustomerName: TextView
         var ItemName: TextView
-        var Quantity: TextView
+        var Pickup: TextView
         var RentDuration: TextView
         var RentDate: TextView
-        var TotalPrice: TextView
+        var Price: TextView
 
         init {
             CustomerName = itemView.findViewById(R.id.transaction_cust_name)
             ItemName = itemView.findViewById(R.id.transaction_item_name)
-            Quantity = itemView.findViewById(R.id.transaction_quantity)
+            Pickup = itemView.findViewById(R.id.transaction_pickup)
             RentDuration = itemView.findViewById(R.id.transaction_rent_duration)
             RentDate = itemView.findViewById(R.id.transaction_rent_date)
-            TotalPrice = itemView.findViewById(R.id.transaction_total_price)
+            Price = itemView.findViewById(R.id.transaction_price)
         }
     }
 
