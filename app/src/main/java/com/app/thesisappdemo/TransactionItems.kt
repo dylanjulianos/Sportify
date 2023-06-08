@@ -3,7 +3,7 @@ package com.app.thesisappdemo
 import java.sql.Timestamp
 
 data class TransactionItems(
-    var TransactionId : String,
+    var CartId : String,
     var ItemName : String,
     var CustomerName : String,
     var TotalPrice : String,
@@ -11,5 +11,6 @@ data class TransactionItems(
     var Payment : String,
     var PhoneNumber : String,
     var RentDuration : Float,
-    var RentDate : String
+    var RentDate : String,
+    var ImageUrl : String
 )

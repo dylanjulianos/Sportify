@@ -3,6 +3,8 @@ package com.app.thesisappdemo
 import android.app.DatePickerDialog
 import android.net.Uri
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.text.method.DigitsKeyListener
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -47,7 +49,7 @@ class CustomerOrder : Fragment(){
 //    private val binding get() = _binding!!
 
     private lateinit var binding : FragmentCustomerOrderBinding
-//    private lateinit var tvDatePicker : TextInputEditText
+    private lateinit var tvDatePicker : TextInputEditText
     private lateinit var buttonDatePicker : TextInputLayout
     private lateinit var phone_number : TextInputEditText
     private lateinit var rental_duration : TextInputEditText
@@ -64,7 +66,7 @@ class CustomerOrder : Fragment(){
     }
 
     private val itemCollectionRef = Firebase.firestore.collection("Cart")
-    var transaction_id = 1
+    var cart_id = 1
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -78,6 +80,7 @@ class CustomerOrder : Fragment(){
         val collection = "Items"
         val firestoreref = firestore.collection(collection).document(kode.toString())
 
+        val imageurl = v.findViewById<TextView>(R.id.urlimages)
         val picture = v.findViewById(R.id.imagevieworder) as ImageView
         val item_name = v.findViewById(R.id.productnameorder) as TextView
         val price = v.findViewById(R.id.totalprice) as TextInputEditText
@@ -104,6 +107,7 @@ class CustomerOrder : Fragment(){
             Picasso.get().load(document.data?.get("image_url") as? String).into(picture)
             item_name.setText(document.data?.get("item_name") as? String)
             price.setText("Rp" + document.data?.get("item_price").toString() as? String+ "-/day")
+            imageurl.setText(document.data?.get("image_url") as? String)
 
         }.addOnFailureListener {
                 e-> println("Error showing document: ${e.message}")
@@ -128,7 +132,8 @@ class CustomerOrder : Fragment(){
 //        }
 
         save_button.setOnClickListener{
-            val kode_transaksi = "TC" + transaction_id
+            val cartid = "CI" + cart_id
+            val image_url = imageurl.text.toString()
             val item_name_input = item_name.text.toString()
             val customer_name_input = customer_name.text.toString()
 
@@ -141,7 +146,7 @@ class CustomerOrder : Fragment(){
             val rental_date_input = rental_date.text.toString()
 
             val item = TransactionItems(
-                kode_transaksi
+                cartid
                 , item_name_input
                 , customer_name_input
                 , item_price_input
@@ -150,12 +155,14 @@ class CustomerOrder : Fragment(){
                 , phone_number_input
                 , rental_duration_input
                 , rental_date_input
+                , image_url
             )
             saveItem(item)
             customer_name.setText("")
             phone_number_new.setText("")
             rental_duration_new.setText("")
             rental_date.setText("")
+            imageurl.setText("")
 
             if (phone_number_input.isEmpty()) {
                 phone_number_new.error = "Please enter your phone number"
@@ -190,15 +197,16 @@ class CustomerOrder : Fragment(){
                 val documentId = documentReference.id
 
                 val updatedDocument = hashMapOf(
+                    "CartId" to documentId,
                     "ItemName" to items.ItemName,
                     "TotalPrice" to items.TotalPrice,
-                    "TransactionId" to documentId,
                     "CustomerName" to items.CustomerName,
                     "PickupPoint" to items.PickupPoint,
                     "Payment" to items.Payment,
                     "PhoneNumber" to items.PhoneNumber,
                     "RentDuration" to items.RentDuration,
-                    "RentDate" to items.RentDate
+                    "RentDate" to items.RentDate,
+                    "ImageUrl" to items.ImageUrl
                 )
                 documentReference.set(updatedDocument).addOnSuccessListener {
                     println("Succesfully Added Item")
@@ -215,7 +223,7 @@ class CustomerOrder : Fragment(){
                 Toast.makeText(activity, e.message, Toast.LENGTH_LONG).show()
             }
 
-            }
+        }
     }
 
     companion object {

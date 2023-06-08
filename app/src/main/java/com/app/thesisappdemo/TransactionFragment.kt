@@ -42,14 +42,5 @@ class TransactionFragment : Fragment() {
                 Log.e(TAG, "Error", exception)
             }
         return v
-
-        binding.btnWhatsappTransaction.setOnClickListener {
-            //val url = "http://www.google.com"
-            val url = "https://wa.link/8j16c2"
-            val intent = Intent(Intent.ACTION_VIEW)
-            Toast.makeText(context, "Please wait...", Toast.LENGTH_LONG).show()
-            intent.data = Uri.parse(url)
-            startActivity(intent)
-        }
     }
 }
