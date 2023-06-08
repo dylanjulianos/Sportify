@@ -20,21 +20,7 @@
         <activity
             android:name=".SignInView"
             android:exported="true">
-        <activity
-            android:name=".TransactionSucceedActivity"
-            android:exported="false" />
-        <activity
-            android:name=".CustomerOrderActivity"
-            android:exported="false" />
-        <activity
-            android:name=".Badminton"
-            android:exported="false" />
-        <activity
-            android:name=".Profile"
-            android:exported="false" />
-        <activity
-            android:name=".MainCustomer"
-            android:exported="false" />
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -49,9 +35,13 @@
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
 
+        <activity android:name=".TransactionSucceedActivity"/>
+        <activity android:name=".CustomerOrderActivity"/>
+        <activity android:name=".Badminton"/>
+        <activity android:name=".Profile"/>
+        <activity android:name=".MainCustomer"/>
         <activity android:name=".AdminMain"/>
         <activity android:name=".RegistrationView"/>
-        <activity android:name= ".CustomerView" />
 
     </application>
 

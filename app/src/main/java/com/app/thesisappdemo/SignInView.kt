@@ -73,7 +73,7 @@ class SignInView: AppCompatActivity() {
                     val intent = Intent(this@SignInView, AdminMain::class.java)
                     startActivity(intent)
                 } else if (role == "Customer") {
-                    val intent = Intent(this@SignInView, CustomerView::class.java)
+                    val intent = Intent(this@SignInView, MainCustomer::class.java)
                     startActivity(intent)
                 }
             }

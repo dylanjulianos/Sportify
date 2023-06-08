@@ -31,8 +31,6 @@ import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
 import com.squareup.picasso.Picasso
-import kotlinx.android.synthetic.main.fragment_badminton.recycler_layout
-import kotlinx.android.synthetic.main.fragment_detail_product.backimage
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
