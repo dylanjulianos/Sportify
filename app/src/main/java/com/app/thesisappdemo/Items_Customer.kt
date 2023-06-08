@@ -1,6 +1,6 @@
 package com.app.thesisappdemo
 
-data class Items(
+data class Items_Customer(
     var image_url: String? = null,
     var item_code: String? = null,
     var item_name: String? = null,
