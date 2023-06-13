@@ -15,6 +15,8 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.FirebaseApp
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.DocumentReference
+import com.google.firebase.firestore.DocumentSnapshot
+import com.google.firebase.firestore.EventListener
 import com.google.firebase.storage.FirebaseStorage
 import java.io.FileNotFoundException
 
@@ -43,8 +45,7 @@ class Profile : AppCompatActivity() {
         val docRef = db.collection("Users")
             .document("LHGCSJ8AIc7XPXprVqWx")
 //            .document(uid!!)
-        docRef.get()
-            .addOnSuccessListener { document ->
+        docRef.get().addOnSuccessListener { document ->
                 if(document != null){
                     val un = document.data!!["name"].toString()
                     val email = document.data!!["email"].toString()

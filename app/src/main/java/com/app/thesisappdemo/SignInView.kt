@@ -52,8 +52,7 @@ class SignInView: AppCompatActivity() {
                         val userId = userDocument.id
 
                         getUserRole(userId)
-//                        val intent = Intent(this, MainActivity::class.java)
-//                        startActivity(intent)
+
                     } else {
                         Toast.makeText(this, "Incorrect Email or Password, please try again", Toast.LENGTH_LONG).show()
                     }
@@ -67,12 +66,18 @@ class SignInView: AppCompatActivity() {
         firestore.collection("Users").document(userId)
             .get()
             .addOnSuccessListener { documentSnapshot ->
+                val userid = documentSnapshot.getString("userid")
+                val name = documentSnapshot.getString("name")
                 val role = documentSnapshot.getString("role")
+                val email = documentSnapshot.getString("email")
                 // Use the role as needed
-                if (role == "Admin") {
+                if (role == "Admin")
+                {
                     val intent = Intent(this@SignInView, AdminMain::class.java)
                     startActivity(intent)
-                } else if (role == "Customer") {
+                }
+                    else if (role == "Customer")
+                {
                     val intent = Intent(this@SignInView, MainCustomer::class.java)
                     startActivity(intent)
                 }
