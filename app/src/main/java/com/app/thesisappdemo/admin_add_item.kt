@@ -70,16 +70,6 @@ class admin_add_item : Fragment() {
     var item_id = 1
     private lateinit var current_image_url: String
 
-    private val requestPermissionLauncher = registerForActivityResult(
-        ActivityResultContracts.RequestPermission()
-    ) { isGranted: Boolean ->
-        if (isGranted) {
-            openImagePicker()
-        } else {
-
-        }
-    }
-
     private val pickImageLauncher = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()
     ) { result ->
@@ -143,17 +133,7 @@ class admin_add_item : Fragment() {
 
 
         pick_image_button.setOnClickListener{
-            val permission = Manifest.permission.READ_EXTERNAL_STORAGE
-            if (ContextCompat.checkSelfPermission(requireContext(), permission) == PackageManager.PERMISSION_GRANTED
-            ) {
-
                 openImagePicker()
-
-            } else {
-
-                requestPermissionLauncher.launch(permission)
-
-            }
         }
 
         save_item_button.setOnClickListener{
