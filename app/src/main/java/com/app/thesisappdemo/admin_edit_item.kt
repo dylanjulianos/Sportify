@@ -55,16 +55,6 @@ class admin_edit_item() : Fragment() {
     private lateinit var update_picture_input: ImageView
     private lateinit var current_image_url: String
 
-    private val requestPermissionLauncher = registerForActivityResult(
-        ActivityResultContracts.RequestPermission()
-    ) { isGranted: Boolean ->
-        if (isGranted) {
-            openImagePicker()
-        } else {
-
-        }
-    }
-
     private val pickImageLauncher = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()
     ) { result ->
@@ -145,17 +135,7 @@ class admin_edit_item() : Fragment() {
         }
 
         update_picture_input.setOnClickListener{
-            val permission = Manifest.permission.READ_EXTERNAL_STORAGE
-            if (ContextCompat.checkSelfPermission(requireContext(), permission) == PackageManager.PERMISSION_GRANTED
-            ) {
-
-                openImagePicker()
-
-            } else {
-
-                requestPermissionLauncher.launch(permission)
-
-            }
+            openImagePicker()
         }
 
         update_button.setOnClickListener{
