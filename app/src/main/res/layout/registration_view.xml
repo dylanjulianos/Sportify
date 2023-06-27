@@ -82,9 +82,10 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="15dp"
+            android:editable="false"
             android:background="@drawable/edittext"
             android:fontFamily="@font/inter_semibold"
-            android:hint="Type 'Customer'"
+            android:hint="Customer"
             android:textSize="14dp" />
 
         <TextView

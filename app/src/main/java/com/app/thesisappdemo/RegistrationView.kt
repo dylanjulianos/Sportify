@@ -36,7 +36,7 @@ class RegistrationView: AppCompatActivity() {
         etName = findViewById(R.id.textfield_NameRegister)
         etEmail = findViewById(R.id.textfield_EmailRegister)
         etPassword = findViewById(R.id.textfield_PasswordRegister)
-//        etRole = findViewById(R.id.textfield_RoleRegister)
+        etRole = findViewById(R.id.textfield_RoleRegister)
         btnSignIn = findViewById(R.id.signInButtonInRegister)
         btnCreateAccountRegister = findViewById(R.id.createAccountButton)
         val etRole = "Customer"

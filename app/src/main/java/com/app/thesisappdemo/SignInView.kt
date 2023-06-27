@@ -78,7 +78,14 @@ class SignInView: AppCompatActivity() {
                 }
                     else if (role == "Customer")
                 {
+                    val bundle = Bundle()
+                    bundle.putString("userid", userid)
+                    bundle.putString("name", name)
+                    bundle.putString("email", email)
+//                    val fragment = HomeFragment()
                     val intent = Intent(this@SignInView, MainCustomer::class.java)
+//                    val intent = Intent(this, Coba::class.java)
+                    intent.putExtras(bundle)
                     startActivity(intent)
                 }
             }

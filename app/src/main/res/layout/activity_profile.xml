@@ -18,8 +18,8 @@
 
     <ImageView
         android:id="@+id/camera"
-        android:layout_width="250px"
-        android:layout_height="250px"
+        android:layout_width="350px"
+        android:layout_height="350px"
         android:layout_marginBottom="190dp"
         android:layout_gravity="center"
         android:src="@drawable/camera"

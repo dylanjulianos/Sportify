@@ -26,36 +26,66 @@ class MainCustomer : AppCompatActivity() {
 
     lateinit var firestore: FirebaseFirestore
     private lateinit var binding : MainCustomerBinding
-    val sdf = SimpleDateFormat("dd/M/yyyy hh:mm:ss")
-    val currentDate = sdf.format(Date())
+//    val sdf = SimpleDateFormat("dd/M/yyyy hh:mm:ss")
+//    val currentDate = sdf.format(Date())
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = MainCustomerBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        replaceFragment(HomeFragment())
+
         firestore = FirebaseFirestore.getInstance()
 
-        binding.bottomNavigationView.setOnItemSelectedListener {
-            when(it.itemId){
-                R.id.home -> replaceFragment(HomeFragment())
-                R.id.cart -> replaceFragment(CartFragment())
-                R.id.transaction -> replaceFragment(TransactionFragment())
-                else-> {
-                }
-            }
-            true
-        }
+        val bundle = intent.extras
+        if (bundle != null) {
+            val userid = bundle.getString("userid")
+            val name = bundle.getString("name")
+            val email = bundle.getString("email")
 
-        binding.btnProfile.setOnClickListener {
-            Toast.makeText(applicationContext,"Please wait...", Toast.LENGTH_LONG).show()
-            val intent = Intent(this, Profile::class.java)
-            startActivity(intent)
+            val useridview = findViewById<TextView>(R.id.userid)
+            useridview.text = "User id: $userid"
+
+            val bundlehome1 = Bundle()
+            bundlehome1.putString("userid", userid)
+            val fragment = HomeFragment()
+            fragment.arguments = bundlehome1
+            replaceFragment(fragment)
+
+            binding.bottomNavigationView.setOnItemSelectedListener {
+                val bundlehome = Bundle()
+                bundlehome.putString("userid", userid)
+                when (it.itemId) {
+                    R.id.home -> {
+                        val fragment = HomeFragment()
+                        fragment.arguments = bundlehome
+                        replaceFragment(fragment)
+                    }
+                    R.id.cart -> replaceFragment(CartFragment())
+                    R.id.transaction -> replaceFragment(TransactionFragment())
+                    else -> {
+                    }
+                }
+                true
+            }
+
+            binding.btnProfile.setOnClickListener {
+                Toast.makeText(applicationContext, "Please wait...", Toast.LENGTH_LONG).show()
+                val bundle = Bundle()
+                    bundle.putString("userid", userid)
+                    bundle.putString("name", name)
+                    bundle.putString("email", email)
+//            val intent = Intent(this@SignInView, MainCustomer::class.java)
+//                    val intent = Intent(this, Coba::class.java)
+                val intent = Intent(this, Profile::class.java)
+                intent.putExtras(bundle)
+                startActivity(intent)
+//            startActivity(intent)
+            }
         }
     }
 
-    private fun replaceFragment(fragment: Fragment){
-
+    private fun replaceFragment(fragment: Fragment)
+    {
         val fragmentManager = supportFragmentManager
         val fragmentTransaction = fragmentManager.beginTransaction()
         fragmentTransaction.replace(R.id.frame_layout, fragment)

@@ -168,6 +168,5 @@
         android:textSize="25dp"
         android:fontFamily="@font/inter">
     </TextView>
-
 </FrameLayout>
 

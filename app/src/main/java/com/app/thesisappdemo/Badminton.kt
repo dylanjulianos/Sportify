@@ -50,13 +50,14 @@ class Badminton : Fragment() {
         // Inflate the layout for this fragment
         val v = inflater.inflate(R.layout.fragment_badminton, container, false)
         val collectionRef = firestore.collection("Items")
+
         val fieldName = "sport_category"
         val desiredValue = "Badminton"
         val query = collectionRef.whereEqualTo(fieldName,desiredValue)
 
         val item_list = v.findViewById(R.id.RecyclerView) as RecyclerView
         item_list.layoutManager = gridLayoutManager
-
+        
         query
             .get().addOnSuccessListener { result ->
             val dataset = result.documents

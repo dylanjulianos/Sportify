@@ -10,6 +10,7 @@ import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
@@ -31,8 +32,10 @@ class HomeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         //val url = "http://www.google.com"
-        val url = "https://wa.link/8j16c2"
+        val url = "https://wa.link/p497gg"
         val intent = Intent(Intent.ACTION_VIEW)
+
+        val uid = arguments?.getString("userid")
 
         binding.btnWhatsapp.setOnClickListener() {
             Toast.makeText(context, "Please wait...", Toast.LENGTH_LONG).show()
@@ -42,7 +45,12 @@ class HomeFragment : Fragment() {
 
         binding.badmintoncat.setOnClickListener {
             showToast("Loading, Please wait...")
+
+            val bundle = Bundle()
+            bundle.putString("userid", uid.toString())
+
             val destinationFragment = Badminton()
+            destinationFragment.arguments = bundle
             val transaction: FragmentTransaction = parentFragmentManager.beginTransaction()
 
             transaction.replace(R.id.frame_layout, destinationFragment)
@@ -51,7 +59,12 @@ class HomeFragment : Fragment() {
 
         binding.soccercat.setOnClickListener {
             showToast("Loading, Please wait...")
+
+            val bundle = Bundle()
+            bundle.putString("userid", uid.toString())
+
             val destinationFragment = Soccer()
+            destinationFragment.arguments = bundle
             val transaction: FragmentTransaction = parentFragmentManager.beginTransaction()
 
             transaction.replace(R.id.frame_layout, destinationFragment)
@@ -60,7 +73,12 @@ class HomeFragment : Fragment() {
 
         binding.basketballcat.setOnClickListener {
             showToast("Loading, Please wait...")
+
+            val bundle = Bundle()
+            bundle.putString("userid", uid.toString())
+
             val destinationFragment = Basketball()
+            destinationFragment.arguments = bundle
             val transaction: FragmentTransaction = parentFragmentManager.beginTransaction()
 
             transaction.replace(R.id.frame_layout, destinationFragment)
@@ -69,7 +87,12 @@ class HomeFragment : Fragment() {
 
         binding.golfcat.setOnClickListener {
             showToast("Loading, Please wait...")
+
+            val bundle = Bundle()
+            bundle.putString("userid", uid.toString())
+
             val destinationFragment = Golf()
+            destinationFragment.arguments = bundle
             val transaction: FragmentTransaction = parentFragmentManager.beginTransaction()
 
             transaction.replace(R.id.frame_layout, destinationFragment)
@@ -86,7 +109,7 @@ class HomeFragment : Fragment() {
 
         executor.execute {
             val imageURL =
-                "https://betv.disway.id/upload/6b0095211002da431557f99811a6f0a8.jpg" //badmintan
+                "https://betv.disway.id/upload/6b0095211002da431557f99811a6f0a8.jpg" //badminton
             val imageURL1 =
                 "https://i.pinimg.com/564x/5f/fc/7a/5ffc7ad8882000ea75232001865b1e7d.jpg" //basket
             val imageURL2 =
