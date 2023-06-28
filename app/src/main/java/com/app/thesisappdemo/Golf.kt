@@ -61,7 +61,10 @@ class Golf : Fragment() {
         query
             .get().addOnSuccessListener { result ->
                 val dataset = result.documents
-                val adapter = MyAdapter(dataset, parentFragmentManager)
+                val uid = arguments?.getString("userid")
+                val bundle = Bundle()
+                bundle.putString("userid", uid.toString())
+                val adapter = MyAdapter(bundle, dataset, parentFragmentManager)
                 item_list.adapter = adapter
             }
             .addOnFailureListener { exception ->

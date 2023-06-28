@@ -15,7 +15,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.squareup.picasso.Picasso
 import java.text.NumberFormat
 
-class MyAdapter(private val dataset: List<DocumentSnapshot>, private val fragmentManager: FragmentManager): RecyclerView.Adapter<MyAdapter.ViewHolder>() {
+class MyAdapter(private val bundle: Bundle, private val dataset: List<DocumentSnapshot>, private val fragmentManager: FragmentManager): RecyclerView.Adapter<MyAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyAdapter.ViewHolder {
         val v = LayoutInflater.from(parent.context).inflate(R.layout.recycleritem, parent, false)
@@ -39,6 +39,8 @@ class MyAdapter(private val dataset: List<DocumentSnapshot>, private val fragmen
         val price = documentSnapshot.getDouble("item_price")
         val imageUrl = documentSnapshot.getString("image_url")
 
+        val uid = bundle?.getString("userid")
+
         val formattedNumber = numberFormat.format(price)
 
         holder.itemName.text = nama
@@ -52,6 +54,8 @@ class MyAdapter(private val dataset: List<DocumentSnapshot>, private val fragmen
         holder.card_view_item.setOnClickListener{
             val bundle = Bundle()
             bundle.putString("kode", kode_barang.toString())
+            bundle.putString("userid", uid.toString())
+
             val hal_layout_detail = DetailProduct()
             hal_layout_detail.arguments = bundle
             val transaction = fragmentManager.beginTransaction()

@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import android.content.Intent
+import android.widget.TextView
 import com.google.firebase.firestore.FirebaseFirestore
 
 // TODO: Rename parameter arguments, choose names that match
@@ -51,6 +52,11 @@ class Badminton : Fragment() {
         val v = inflater.inflate(R.layout.fragment_badminton, container, false)
         val collectionRef = firestore.collection("Items")
 
+        val uid = arguments?.getString("userid")
+
+
+//        val adapter1 = MyAdapter(bundle)
+
         val fieldName = "sport_category"
         val desiredValue = "Badminton"
         val query = collectionRef.whereEqualTo(fieldName,desiredValue)
@@ -61,7 +67,10 @@ class Badminton : Fragment() {
         query
             .get().addOnSuccessListener { result ->
             val dataset = result.documents
-            val adapter = MyAdapter(dataset, parentFragmentManager)
+            val bundle = Bundle()
+            bundle.putString("userid", uid.toString())
+
+            val adapter = MyAdapter(bundle, dataset, parentFragmentManager)
             item_list.adapter = adapter
             }
             .addOnFailureListener { exception ->

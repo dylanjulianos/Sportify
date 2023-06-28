@@ -70,6 +70,10 @@ class DetailProduct : Fragment() {
         val v = inflater.inflate(R.layout.fragment_detail_product, container, false)
         val bundle = arguments
 
+        val uid = bundle?.getString("userid")
+        val useridview = v.findViewById<TextView>(R.id.userid)
+        useridview.text = "User id: $uid"
+
         val kode = bundle?.getString("kode")
         val collection = "Items"
         val firestoreref = firestore.collection(collection).document(kode.toString())
@@ -109,7 +113,10 @@ class DetailProduct : Fragment() {
         }
 
         backimage.setOnClickListener{
+            val bundle = Bundle()
+            bundle.putString("userid", uid.toString())
             val home = HomeFragment()
+            home.arguments = bundle
             val transaction: FragmentTransaction = parentFragmentManager.beginTransaction()
             transaction.replace(R.id.frame_layout, home)
             transaction.commit()
@@ -118,15 +125,14 @@ class DetailProduct : Fragment() {
         return v
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-    }
-
-    fun navigateToActivity() {
-
-        val intent = Intent(activity, CustomerOrderActivity::class.java)
-        startActivity(intent)
-    }
+//    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+//        super.onViewCreated(view, savedInstanceState)
+//    }
+//
+//    fun navigateToActivity() {
+//        val intent = Intent(activity, CustomerOrderActivity::class.java)
+//        startActivity(intent)
+//    }
 
     companion object {
         /**

@@ -70,14 +70,14 @@ class MainCustomer : AppCompatActivity() {
 
             binding.btnProfile.setOnClickListener {
                 Toast.makeText(applicationContext, "Please wait...", Toast.LENGTH_LONG).show()
-                val bundle = Bundle()
-                    bundle.putString("userid", userid)
-                    bundle.putString("name", name)
-                    bundle.putString("email", email)
+//                val bundlehome = Bundle()
+                    bundlehome1.putString("userid", userid)
+                    bundlehome1.putString("name", name)
+                    bundlehome1.putString("email", email)
 //            val intent = Intent(this@SignInView, MainCustomer::class.java)
 //                    val intent = Intent(this, Coba::class.java)
                 val intent = Intent(this, Profile::class.java)
-                intent.putExtras(bundle)
+                intent.putExtras(bundlehome1)
                 startActivity(intent)
 //            startActivity(intent)
             }
