@@ -32,7 +32,7 @@ class HomeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         //val url = "http://www.google.com"
-        val url = "https://wa.link/p497gg"
+        val url = "https://wa.me/message/2WAY7SNTRR3OM1"
         val intent = Intent(Intent.ACTION_VIEW)
 
         val uid = arguments?.getString("userid")
