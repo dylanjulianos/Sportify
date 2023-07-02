@@ -165,6 +165,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
+            android:alpha="0"
             android:text="user id"
             android:layout_marginTop="4dp"
             app:layout_constraintStart_toStartOf="parent"
@@ -176,6 +177,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginTop="20dp"
+            android:alpha="0"
             android:text="user id"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />

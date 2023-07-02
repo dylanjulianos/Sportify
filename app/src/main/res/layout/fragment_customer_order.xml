@@ -215,6 +215,7 @@
         android:layout_height="wrap_content"
         android:text="User id"
         android:textSize="20dp"
+        android:alpha="0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 

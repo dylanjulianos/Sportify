@@ -71,8 +71,6 @@ class DetailProduct : Fragment() {
         val bundle = arguments
 
         val uid = bundle?.getString("userid")
-        val useridview = v.findViewById<TextView>(R.id.userid)
-        useridview.text = "User id: $uid"
 
         val kode = bundle?.getString("kode")
         val collection = "Items"
