@@ -24,7 +24,7 @@ import org.w3c.dom.Text
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
 
-class CartRecyclerAdapter (private val dataset: List<DocumentSnapshot>, private val fragmentManager: FragmentManager) : RecyclerView.Adapter<CartRecyclerAdapter.ViewHolder>() {
+class CartRecyclerAdapter (private val bundle: Bundle, private val dataset: List<DocumentSnapshot>, private val fragmentManager: FragmentManager) : RecyclerView.Adapter<CartRecyclerAdapter.ViewHolder>() {
 
     private val firestore = Firebase.firestore
     private val firestoreRef = firestore.collection("Transaction")
@@ -38,22 +38,28 @@ class CartRecyclerAdapter (private val dataset: List<DocumentSnapshot>, private 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 
         val documentSnapshot = dataset[position]
-        val namaCustomer = documentSnapshot.getString("CustomerName")
-        val jemput = documentSnapshot.getString("PickupPoint")
-        val namaitem = documentSnapshot.getString("ItemName")
-        val tanggalsewa = documentSnapshot.getString("RentDate")
-        val durasisewa = documentSnapshot.getLong("RentDuration")
-        val totalharga = documentSnapshot.getString("TotalPrice")
-        val pembayaran = documentSnapshot.getString("Payment")
-        val nomor = documentSnapshot.getString("PhoneNumber")
-        val imageurl = documentSnapshot.getString("ImageUrl")
-        val cartcode = documentSnapshot.getString("CartId")
+        val uid = bundle?.getString("userid")
+        val uid1 = documentSnapshot?.getString("UserId")
+
+        val namaCustomer = documentSnapshot?.getString("CustomerName")
+        val jemput = documentSnapshot?.getString("PickupPoint")
+        val namaitem = documentSnapshot?.getString("ItemName")
+        val tanggalsewa = documentSnapshot?.getString("RentDate")
+        val durasisewa = documentSnapshot?.getLong("RentDuration")
+        val totalharga = documentSnapshot?.getString("TotalPrice")
+        val pembayaran = documentSnapshot?.getString("Payment")
+        val nomor = documentSnapshot?.getString("PhoneNumber")
+        val imageurl = documentSnapshot?.getString("ImageUrl")
+        val cartcode = documentSnapshot?.getString("CartId")
 
         if (imageurl != null) { Picasso.get().load(imageurl).into(holder.gambaritem)
         } else {
             // If imageUrl is null or empty, you can set a placeholder image or handle it differently
             holder.gambaritem.setImageResource(R.drawable.item)
         }
+        holder.uid.text = uid //dari bundle
+        holder.uid1.text = uid1 //dari firestore
+
         holder.customerNameCard.text = namaCustomer
         holder.itemNameCard.text = namaitem
         holder.pickupCard.text = jemput
@@ -64,8 +70,8 @@ class CartRecyclerAdapter (private val dataset: List<DocumentSnapshot>, private 
         holder.phoneNumberCard.text = nomor
 
         holder.checkoutButton.setOnClickListener { view ->
-
             val tambahTransaction = HashMap<String, Any>()
+            tambahTransaction["UserId"] = uid1.toString()
             tambahTransaction["ImageUrl"] = imageurl.toString()
             tambahTransaction["CustomerName"] = namaCustomer.toString()
             tambahTransaction["ItemName"] = namaitem.toString()
@@ -81,6 +87,7 @@ class CartRecyclerAdapter (private val dataset: List<DocumentSnapshot>, private 
                 val itemId = documentReference.id
 
                 val updatedDocument = hashMapOf(
+                    "UserId" to uid1.toString(),
                     "ImageUrl" to imageurl.toString(),
                     "CustomerName" to namaCustomer.toString(),
                     "ItemName" to namaitem.toString(),
@@ -101,19 +108,48 @@ class CartRecyclerAdapter (private val dataset: List<DocumentSnapshot>, private 
                 }
             }
 
-            firestore.collection("Cart").document(cartcode.toString()).delete()
+            val bundle = Bundle()
+            bundle.putString("userid", uid.toString())
 
-            val intent = Intent(view.context, TransactionSucceedActivity::class.java)
-            view.context.startActivity(intent)
+            val docRef = firestore.collection("Cart").document(cartcode.toString())
+
+            docRef.delete()
+                .addOnSuccessListener {
+                    // Document successfully deleted
+                    // You can perform any additional operations here
+                    val bundle = Bundle()
+                    bundle.putString("userid", uid.toString())
+                    val intent = Intent(view.context, TransactionSucceedActivity::class.java)
+                    intent.putExtras(bundle)
+                    view.context.startActivity(intent)
+
+//                    val hal_layout_detail = TransactionFragment()
+//                    hal_layout_detail.arguments = bundle
+//                    val transaction = fragmentManager.beginTransaction()
+//                    transaction.replace(R.id.frame_layout, hal_layout_detail)
+//                    transaction.commit()
+                }
+                .addOnFailureListener { e ->
+                    // An error occurred while deleting the document
+                    // Handle the error appropriately
+                }
+//            firestore.collection("Cart").document(cartcode.toString()).delete()
+//
+//            val intent = Intent(view.context, TransactionSucceedActivity::class.java)
+//            intent.putExtras(bundle)
+//            view.context.startActivity(intent)
 
         }
     }
+
 
     override fun getItemCount(): Int {
         return dataset.size
     }
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        var uid : TextView
+        var uid1 : TextView
         var gambaritem: ImageView
         var customerNameCard: TextView
         var itemNameCard: TextView
@@ -126,6 +162,8 @@ class CartRecyclerAdapter (private val dataset: List<DocumentSnapshot>, private 
         var checkoutButton: Button
 
         init {
+            uid = itemView.findViewById(R.id.uid)
+            uid1 = itemView.findViewById(R.id.uid1)
             gambaritem = itemView.findViewById(R.id.itemImageCard)
             customerNameCard = itemView.findViewById(R.id.customerNameCard)
             itemNameCard = itemView.findViewById(R.id.itemNameCard)

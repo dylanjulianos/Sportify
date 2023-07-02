@@ -3,6 +3,7 @@ package com.app.thesisappdemo
 import java.sql.Timestamp
 
 data class TransactionItems(
+    var UserId : String,
     var CartId : String,
     var ItemName : String,
     var CustomerName : String,

@@ -98,6 +98,8 @@ class DetailProduct : Fragment() {
         rentnow.setOnClickListener{
             val bundle = Bundle()
             bundle.putString("kode", kode.toString())
+            bundle.putString("userid", uid.toString())
+
             val hal_layout_detail = CustomerOrder()
             hal_layout_detail.arguments = bundle
             val transaction: FragmentTransaction = parentFragmentManager.beginTransaction()

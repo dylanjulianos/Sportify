@@ -60,8 +60,16 @@ class MainCustomer : AppCompatActivity() {
                         fragment.arguments = bundlehome
                         replaceFragment(fragment)
                     }
-                    R.id.cart -> replaceFragment(CartFragment())
-                    R.id.transaction -> replaceFragment(TransactionFragment())
+                    R.id.cart -> {
+                        val fragment = CartFragment()
+                        fragment.arguments = bundlehome
+                        replaceFragment(fragment)
+                    }
+                    R.id.transaction -> {
+                        val fragment = TransactionFragment()
+                        fragment.arguments = bundlehome
+                        replaceFragment(fragment)
+                    }
                     else -> {
                     }
                 }

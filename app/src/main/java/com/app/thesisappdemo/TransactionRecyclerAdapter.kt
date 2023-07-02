@@ -39,7 +39,7 @@ class TransactionRecyclerAdapter(private val dataset: List<DocumentSnapshot>, pr
         holder.pickupCard.text = documentSnapshot.get("PickupPoint").toString()
         holder.rentDateCard.text = documentSnapshot.get("RentDate").toString()
         holder.rentDurationCard.text = documentSnapshot.get("RentDuration").toString() + " day(s)"
-        holder.totalPriceCard.text = "Rp" + documentSnapshot.get("TotalPrice").toString()
+        holder.totalPriceCard.text = documentSnapshot.get("TotalPrice").toString()
 
 //        collectionRef.get()
 //            .addOnSuccessListener { querySnapshot ->

@@ -29,11 +29,18 @@ class TransactionFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
+        val collectionRef = firestore.collection("Transaction")
+        val uid = arguments?.getString("userid")
+
         val v = inflater.inflate(R.layout.fragment_transaction, container, false)
         val transaction_List = v.findViewById(R.id.RecylerViewTransaction) as RecyclerView
         transaction_List.layoutManager = layoutManager
 
-        firestore.collection("Transaction").get().addOnSuccessListener { result ->
+        val fieldName = "UserId"
+        val desiredValue = uid.toString()
+        val query = collectionRef.whereEqualTo(fieldName,desiredValue)
+
+        query.get().addOnSuccessListener { result ->
             val dataset = result.documents
             val adapter = TransactionRecyclerAdapter(dataset, parentFragmentManager)
             transaction_List.adapter = adapter

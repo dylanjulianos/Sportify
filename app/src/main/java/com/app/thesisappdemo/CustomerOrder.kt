@@ -77,6 +77,10 @@ class CustomerOrder : Fragment(){
         val bundle = arguments
 
         val kode = bundle?.getString("kode")
+        val uid = bundle?.getString("userid")
+        val useridview = v.findViewById<TextView>(R.id.userid)
+        useridview.text = uid
+
         val collection = "Items"
         val firestoreref = firestore.collection(collection).document(kode.toString())
 
@@ -88,7 +92,7 @@ class CustomerOrder : Fragment(){
         val pickup_point = "Binus @Malang, Jl. Araya Mansion No.8 - 22"
         val payment = "Cash"
 
-//        val button = v.findViewById(R.id.rentaldate) as TextInputEditText
+        val button = v.findViewById(R.id.rentaldate) as TextInputEditText
 
         phone_number = v.findViewById(R.id.customerphone)
         val digits = "0123456789"
@@ -101,7 +105,7 @@ class CustomerOrder : Fragment(){
         val phone_number_new = v.findViewById(R.id.customerphone) as TextInputEditText
         val customer_name = v.findViewById(R.id.customername) as TextInputEditText
         val rental_duration_new = v.findViewById(R.id.rentalduration) as TextInputEditText
-        val rental_date = v.findViewById(R.id.rentaldate) as TextInputEditText
+//        val rental_date = v.findViewById(R.id.rentaldate) as TextInputEditText
 
         firestoreref.get().addOnSuccessListener { document ->
             Picasso.get().load(document.data?.get("image_url") as? String).into(picture)
@@ -115,23 +119,24 @@ class CustomerOrder : Fragment(){
 
         binding = FragmentCustomerOrderBinding.inflate(layoutInflater)
 
-//        tvDatePicker = v.findViewById(R.id.rentaldate)
-//
-//        val myCalendar = Calendar.getInstance()
-//        val datePicker = DatePickerDialog.OnDateSetListener{
-//                view,year,month,dayOfMonth ->
-//            myCalendar.set(Calendar.YEAR, year)
-//            myCalendar.set(Calendar.MONTH, month)
-//            myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth)
-//            updateLable(myCalendar)
-//        }
+        tvDatePicker = v.findViewById(R.id.rentaldate)
 
-//        button.setOnClickListener{
-//            DatePickerDialog(requireActivity(), datePicker, myCalendar.get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
-//                myCalendar.get(Calendar.DAY_OF_MONTH)).show()
-//        }
+        val myCalendar = Calendar.getInstance()
+        val datePicker = DatePickerDialog.OnDateSetListener{
+                view,year,month,dayOfMonth ->
+            myCalendar.set(Calendar.YEAR, year)
+            myCalendar.set(Calendar.MONTH, month)
+            myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth)
+            updateLable(myCalendar)
+        }
+
+        button.setOnClickListener{
+            DatePickerDialog(requireActivity(), datePicker, myCalendar.get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
+                myCalendar.get(Calendar.DAY_OF_MONTH)).show()
+        }
 
         save_button.setOnClickListener{
+            val userid = useridview.text.toString()
             val cartid = "CI" + cart_id
             val image_url = imageurl.text.toString()
             val item_name_input = item_name.text.toString()
@@ -143,10 +148,11 @@ class CustomerOrder : Fragment(){
 
             val phone_number_input = phone_number_new.text.toString()
             val rental_duration_input = rental_duration_new.text.toString().toFloat()
-            val rental_date_input = rental_date.text.toString()
+            val rental_date_input = button.text.toString()
 
             val item = TransactionItems(
-                cartid
+                userid
+                , cartid
                 , item_name_input
                 , customer_name_input
                 , item_price_input
@@ -161,7 +167,7 @@ class CustomerOrder : Fragment(){
             customer_name.setText("")
             phone_number_new.setText("")
             rental_duration_new.setText("")
-            rental_date.setText("")
+            button.setText("")
             imageurl.setText("")
 
             if (phone_number_input.isEmpty()) {
@@ -181,11 +187,11 @@ class CustomerOrder : Fragment(){
     }
 
 
-//    private fun updateLable(myCalendar: Calendar) {
-//        val myFormat = "dd/MM/yyyy"
-//        val sdf = SimpleDateFormat(myFormat, Locale.UK)
-//        tvDatePicker.setText(sdf.format(myCalendar.time))
-//    }
+    private fun updateLable(myCalendar: Calendar) {
+        val myFormat = "dd/MM/yyyy"
+        val sdf = SimpleDateFormat(myFormat, Locale.UK)
+        tvDatePicker.setText(sdf.format(myCalendar.time))
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -197,6 +203,7 @@ class CustomerOrder : Fragment(){
                 val documentId = documentReference.id
 
                 val updatedDocument = hashMapOf(
+                    "UserId" to items.UserId,
                     "CartId" to documentId,
                     "ItemName" to items.ItemName,
                     "TotalPrice" to items.TotalPrice,

@@ -9,6 +9,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.fragment.app.FragmentTransaction
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.app.thesisappdemo.databinding.FragmentCartBinding
@@ -30,20 +31,39 @@ class CartFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        val collectionRef = firestore.collection("Cart")
+        val uid = arguments?.getString("userid")
 
         val v = inflater.inflate(R.layout.fragment_cart, container, false)
         val cart_List = v.findViewById(R.id.RecylerViewCart) as RecyclerView
         cart_List.layoutManager = layoutManager
 
-        firestore.collection("Cart").get().addOnSuccessListener { result ->
+        val fieldName = "UserId"
+        val desiredValue = uid.toString()
+        val query = collectionRef.whereEqualTo(fieldName,desiredValue)
+
+        query.get().addOnSuccessListener { result ->
             val dataset = result.documents
-            val adapter = CartRecyclerAdapter(dataset, parentFragmentManager)
+
+            val bundle = Bundle()
+            bundle.putString("userid", uid.toString())
+
+            val adapter = CartRecyclerAdapter(bundle, dataset, parentFragmentManager)
             cart_List.adapter = adapter
-        }
+            refreshFragment()
+            }
             .addOnFailureListener { exception ->
                 Log.e(TAG, "Error", exception)
             }
 
         return v
+    }
+
+
+    private fun refreshFragment() {
+        val fragmentTransaction = parentFragmentManager.beginTransaction()
+        fragmentTransaction.detach(this)
+        fragmentTransaction.attach(this)
+        fragmentTransaction.commit()
     }
 }

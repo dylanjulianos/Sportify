@@ -14,8 +14,16 @@ class TransactionSucceedActivity : AppCompatActivity() {
         binding = ActivityTransactionSucceedBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+//        val bundle = intent.extras
+//        val uid = bundle?.getString("userid")
+        val value = intent.getStringExtra("userid")
+
         binding.continueButton.setOnClickListener {
+            val bundle = Bundle()
+            bundle.putString("userid", value)
+
             val intent = Intent(this, MainCustomer::class.java)
+            intent.putExtras(bundle)
             startActivity(intent)
         }
     }
