@@ -38,6 +38,7 @@ class MyAdapter(private val bundle: Bundle, private val dataset: List<DocumentSn
         val kategori = documentSnapshot.getString("sport_category")
         val price = documentSnapshot.getDouble("item_price")
         val imageUrl = documentSnapshot.getString("image_url")
+        val status = documentSnapshot.getString("status")
 
         val uid = bundle?.getString("userid")
 
@@ -51,18 +52,36 @@ class MyAdapter(private val bundle: Bundle, private val dataset: List<DocumentSn
             holder.itemImage.setImageResource(R.drawable.item)
         }
 
-        holder.card_view_item.setOnClickListener{
-            val bundle = Bundle()
-            bundle.putString("kode", kode_barang.toString())
-            bundle.putString("userid", uid.toString())
+        if (status == "available") {
+            holder.card_view_item.isEnabled = true
+            holder.unavailable.visibility = View.GONE
+            holder.stockpics.visibility = View.GONE
+            holder.card_view_item.setOnClickListener {
+                val bundle = Bundle()
+                bundle.putString("kode", kode_barang.toString())
+                bundle.putString("userid", uid.toString())
 
-            val hal_layout_detail = DetailProduct()
-            hal_layout_detail.arguments = bundle
-            val transaction = fragmentManager.beginTransaction()
-            transaction.replace(R.id.frame_layout, hal_layout_detail)
-            transaction.commit()
+                val hal_layout_detail = DetailProduct()
+                hal_layout_detail.arguments = bundle
+                val transaction = fragmentManager.beginTransaction()
+                transaction.replace(R.id.frame_layout, hal_layout_detail)
+                transaction.commit()
+            }
         }
-
+        else if (status == "unavailable") {
+            // Disable click listener for RecyclerView
+            holder.card_view_item.isEnabled = false
+            holder.card_view_item.setOnClickListener(null)
+            holder.unavailable.visibility = View.VISIBLE
+            holder.stockpics.visibility = View.VISIBLE
+        }
+        else if (status != "available") {
+            // Disable click listener for RecyclerView
+            holder.card_view_item.isEnabled = false
+            holder.card_view_item.setOnClickListener(null)
+            holder.unavailable.visibility = View.VISIBLE
+            holder.stockpics.visibility = View.VISIBLE
+        }
     }
 
     override fun getItemCount(): Int {
@@ -71,15 +90,19 @@ class MyAdapter(private val bundle: Bundle, private val dataset: List<DocumentSn
 
     inner class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
         var itemImage : ImageView
+        var stockpics : ImageView
         var itemName : TextView
         var itemPrice : TextView
         lateinit var card_view_item : CardView
+        lateinit var unavailable : CardView
 
         init {
+            stockpics = itemView.findViewById(R.id.stockpics)
             itemImage = itemView.findViewById(R.id.item_display_picture)
             itemName = itemView.findViewById(R.id.item_display_name)
             itemPrice= itemView.findViewById(R.id.item_price)
             card_view_item = itemView.findViewById(R.id.card_view_item)
+            unavailable = itemView.findViewById(R.id.unavailable)
         }
     }
 }
