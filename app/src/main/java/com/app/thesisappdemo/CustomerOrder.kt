@@ -106,13 +106,14 @@ class CustomerOrder : Fragment(){
         val customer_name = v.findViewById(R.id.customername) as TextInputEditText
         val rental_duration_new = v.findViewById(R.id.rentalduration) as TextInputEditText
 //        val rental_date = v.findViewById(R.id.rentaldate) as TextInputEditText
+        val status = v.findViewById<TextView>(R.id.status)
 
         firestoreref.get().addOnSuccessListener { document ->
             Picasso.get().load(document.data?.get("image_url") as? String).into(picture)
             item_name.setText(document.data?.get("item_name") as? String)
             price.setText("Rp" + document.data?.get("item_price").toString() as? String+ "-/day")
             imageurl.setText(document.data?.get("image_url") as? String)
-
+            status.setText(document.data?.get("status") as? String)
         }.addOnFailureListener {
                 e-> println("Error showing document: ${e.message}")
         }
@@ -129,6 +130,9 @@ class CustomerOrder : Fragment(){
             myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth)
             updateLable(myCalendar)
         }
+
+        val fieldUpdates = HashMap<String, Any>()
+        fieldUpdates["status"] = "unavailable"
 
         button.setOnClickListener{
             DatePickerDialog(requireActivity(), datePicker, myCalendar.get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
@@ -149,6 +153,8 @@ class CustomerOrder : Fragment(){
             val phone_number_input = phone_number_new.text.toString()
             val rental_duration_input = rental_duration_new.text.toString().toFloat()
             val rental_date_input = button.text.toString()
+
+            updateFieldValue()
 
             val item = TransactionItems(
                 userid
@@ -184,6 +190,17 @@ class CustomerOrder : Fragment(){
 
     private fun showToast(message: String) {
         Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
+    }
+
+    private fun updateFieldValue() {
+        val bundle = arguments
+        val kode = bundle?.getString("kode")
+        val statusupdate = "unavailable"
+
+        val collection = "Items"
+        val firestoreref = firestore.collection(collection).document(kode.toString())
+
+        firestoreref.update("status", statusupdate)
     }
 
 
@@ -229,7 +246,6 @@ class CustomerOrder : Fragment(){
             withContext(Dispatchers.Main){
                 Toast.makeText(activity, e.message, Toast.LENGTH_LONG).show()
             }
-
         }
     }
 
