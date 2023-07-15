@@ -8,5 +8,6 @@ data class Items (
     var item_name: String,
     var price: Float,
     var sport_category: String,
-    var item_bio: String
+    var item_bio: String,
+    var status: String
 )
